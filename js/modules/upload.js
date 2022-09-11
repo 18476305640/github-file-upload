@@ -1,12 +1,23 @@
+import '../jquery.js'
 //configObj
 let configObj = {
   token: "",
   userAndRepo: "",
   branch: "",
   path: "",
+  dns: "",
   ...JSON.parse(localStorage.getItem("config")) // 加载配置
 }
-
+// dns加速
+function dns (url) {
+  let dnsUrl = configObj.dns || "https://cdn.jsdelivr.net/gh/"
+  let delimiter = configObj.branch + "/";
+  let start_index = url.indexOf(delimiter);
+  let _last_str = url.substring(start_index, url.length)
+  let last_str = configObj.userAndRepo + "@" + _last_str
+  // 返回加速后的链接
+  return dnsUrl + last_str;
+}
 let githubUpload = function githubUpload (fileName, fileData) {
   console.log(fileName)
   $("#resource_box").html("")
@@ -24,7 +35,8 @@ let githubUpload = function githubUpload (fileName, fileData) {
       content: fileData
     }),
     success (data) {
-      let repoUrl = data.content.download_url
+      // 对原始链接进行nds加速
+      let repoUrl = dns(data.content.download_url)
 
       // 将内容写到剪切板
       navigator.clipboard.writeText(urlFormat(repoUrl, "md", fileName)).then(function () {
