@@ -1,13 +1,6 @@
 import '../jquery.js'
-//configObj
-let configObj = {
-  token: "",
-  userAndRepo: "",
-  branch: "",
-  path: "",
-  dns: "",
-  ...JSON.parse(localStorage.getItem("config")) // 加载配置
-}
+// 引入配置对象
+import configObj from './config.js'
 // dns加速
 function dns (url) {
   let dnsUrl = configObj.dns || "https://cdn.jsdelivr.net/gh/"
