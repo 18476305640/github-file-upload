@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" type="text/css" href="css/index.css">
+  <script src="js/jquery.js"></script>
+  <script src="js/date-format.js"></script>
+  <script src="js/utils.js"></script>
+
+
+  <script type="module">
+    // 导入配置
+    import configObj from './js/modules/config.js'
+    // 导入主体函数 上传函数
+    import { githubUpload, toUplog } from './js/modules/upload.js'
+    // 导入触发条件
+    import './js/modules/triggers.js'
+    // 导入动作
+    import './js/modules/index.js'
+
+  </script>
+
+</head>
+
+<body>
+  <div id="config_box">
+    <button id="config_control">配置</button> 
+    <span style="color:#787878;">&nbsp;公告：非图片文件仅支持粘贴方式上传，支持的非图片文件：zip </span>
+    <div id="config">
+      <table>
+        <tr>
+          <td>token：</td>
+          <td><input type="text" name="token"></td>
+        </tr>
+        <tr>
+          <td>用户名/仓库名：</td>
+          <td><input type="text" name="userAndRepo" placeholder="比如:“zhuangjie/img-repo”"></td>
+        </tr>
+        <tr>
+          <td>存放分支：</td>
+          <td> <input type="text" name="branch" /></td>
+        </tr>
+        <tr>
+          <td>存放路径：</td>
+          <td><input type="text" name="path" placeholder="比如：“/images”" /></td>
+        </tr>
+      </table>
+
+    </div>
+  </div>
+
+  <div id="choose_img">
+    <input type="file" name="content" id="myFile" hidden>
+    <img src="" id="img_pre_show" />
+    <div id="upload_hint">
+      <p>方式一：选择图片后，点击图片上传~</p>
+      <p>方式二：在些页面，粘贴图片~</p>
+    </div>
+  </div>
+
+  <br />
+  <div id="msg">
+    <p>请在此页面粘贴！ ☆⌒(*＾-゜)v THX!!</p>
+    
+  </div>
+  <div id="resource_box">
+
+  </div>
+
+</body>
+
+</html>
