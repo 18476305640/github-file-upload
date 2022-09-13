@@ -11,9 +11,10 @@ $(function () {
     $("input[name='dns']").val(configObj.dns)
   })()
   // 配置的保存
+  let configButName = $("#config_control").text()
   $("#config_control").click(function () {
     if ($("#config").is(":visible")) {
-      $("#config_control").text("配置")
+      $("#config_control").text(configButName)
       // 执行保存配置的操作
       configObj.token = $("input[name='token']").val()
       configObj.userAndRepo = $("input[name='userAndRepo']").val()
