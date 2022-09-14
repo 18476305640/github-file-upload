@@ -32,7 +32,7 @@ let githubUpload = function githubUpload (fileName, fileData) {
       let repoUrl = dns(data.content.download_url)
 
       // 将内容写到剪切板
-      navigator.clipboard.writeText(urlFormat(repoUrl, "md", fileName)).then(function () {
+      navigator.clipboard.writeText(urlFormat(repoUrl, "md")).then(function () {
         console.log('OK，Template copied to clipboard！')
         $("#msg").html($("#msg").html() + "<p style='color:#008040'>② 上传成功了，请查看剪切板！ヾ(^▽^*)))</p>")
         if (repoUrl.indexOf(".zip") < 0) {
@@ -49,7 +49,7 @@ let githubUpload = function githubUpload (fileName, fileData) {
     }
   })
 }
-let toUplog = function toUplog (fileName = new Date().getTime(), fileData) {
+let toUplog = function toUplog (fileName, fileData) {
   githubUpload(fileName, fileData)
 }
 export { githubUpload, toUplog }
