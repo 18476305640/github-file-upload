@@ -37,3 +37,10 @@
   border: none;
   border-radius: 5px;
 }
+
+input {
+  display: block;
+  width: 400px;
+  border: none;
+  padding: 5px;
+}

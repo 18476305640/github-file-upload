@@ -4,6 +4,7 @@ import configObj from './config.js'
 // dns加速
 function dns (url) {
   let dnsUrl = configObj.dns || "https://cdn.jsdelivr.net/gh/"
+  if (dnsUrl.indexOf("/") != dnsUrl.length - 1) dnsUrl += "/";
   let delimiter = configObj.branch + "/";
   let start_index = url.indexOf(delimiter);
   let _last_str = url.substring(start_index, url.length)

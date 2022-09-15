@@ -12,6 +12,9 @@ $(function () {
   })()
   // 配置的保存
   let configButName = $("#config_control").text()
+  let default_config = {
+
+  }
   $("#config_control").click(function () {
     if ($("#config").is(":visible")) {
       $("#config_control").text(configButName)
