@@ -1,9 +1,11 @@
 #config {
+  box-sizing: border-box;
   width: 100%;
   display: none;
   background-color: #d8d8d8;
   padding: 20px;
   margin: 20px 0px;
+  overflow: hidden;
 }
 
 #choose_img {
@@ -41,6 +43,7 @@
 input {
   display: block;
   width: 400px;
+  max-width: 60%;
   border: none;
   padding: 5px;
 }
