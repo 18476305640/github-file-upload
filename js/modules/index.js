@@ -1,6 +1,7 @@
 // 导入配置
 import configObj from './config.js'
 import '../jquery.js'
+import '/js/utils.js'
 $(function () {
   // 回显配置
   (function () {
@@ -47,15 +48,19 @@ $(function () {
     var dataURL = windowURL.createObjectURL($('#myFile')[0].files[0]);
     // 将文件对象挂载到window对象上！！
     window.currentChooseFiles = $('#myFile')[0].files;
-    if(window.currentChooseFiles[0].type.indexOf("image") == 0) {
+    if (window.currentChooseFiles[0].type.indexOf("image") == 0) {
       // 上传的是图片
       $('#img_pre_show').attr('src', dataURL)
-    }else {
-      $('#img_pre_show').attr('src',"img/file.png" )
+    } else {
+      $('#img_pre_show').attr('src', "img/file.png")
     }
-    
+    // 给资源绑定可点击复制的功能
+    bindCopy(".resource_box",".copyUrl","href","click");
+
     $("#upload_hint").hide()
   })
+
+  
 
 
 })

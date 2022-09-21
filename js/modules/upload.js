@@ -3,8 +3,8 @@ import '../jquery.js'
 import configObj from './config.js'
 // dns加速
 function dns (url) {
-  let dnsUrl = configObj.dns || "https://cdn.jsdelivr.net/gh/"
-  if (dnsUrl.indexOf("/") != dnsUrl.length - 1) dnsUrl += "/";
+  let dnsUrl =  "https://cdn.jsdelivr.net/gh"
+  if (dnsUrl.lastIndexOf("/") != dnsUrl.length - 1) dnsUrl += "/";
   let delimiter = configObj.branch + "/";
   let start_index = url.indexOf(delimiter);
   let _last_str = url.substring(start_index, url.length)
@@ -29,7 +29,8 @@ let githubUpload = function (fileName, fileData,isImage = true) {
     }),
     success (data) {
       // 对原始链接进行nds加速
-      let repoUrl = dns(data.content.download_url)
+      let initUrl = data.content.download_url
+      let repoUrl = dns(initUrl)
 
       // 将内容写到剪切板
       let finallyUrl = repoUrl;
@@ -39,11 +40,15 @@ let githubUpload = function (fileName, fileData,isImage = true) {
         console.log(">>> 正在上传的是图片");
         finallyUrl = urlFormat(repoUrl, "md")
       }
+      console.log(initUrl)
       navigator.clipboard.writeText(finallyUrl).then(function () {
         console.log('OK，Template copied to clipboard！')
         $("#msg").html($("#msg").html() + "<p style='color:#008040'>② 上传成功了，请查看剪切板！ヾ(^▽^*)))</p>")
         if (isImage) {
           $("#resource_box").html(`<img src="${repoUrl}" />`)
+        }else {
+          $("#resource_box").html(`<a href="${initUrl}" class="copyUrl" title="默认复制加速链接，如果是一些特殊文件加速链接可能打不开，所以在这里给出了原链~">文件"原链"(推荐,点击复制)</a>`)
+          
         }
 
       }, function () {
@@ -52,6 +57,15 @@ let githubUpload = function (fileName, fileData,isImage = true) {
 
     },
     error (errInfo) {
+      if(errInfo.status == 422) {
+        let initUrl = `https://raw.githubusercontent.com/${configObj.userAndRepo}/${configObj.branch}${configObj.path}/${new Date().Format("yyyy")}/${new Date().Format("MM")}/${new Date().Format("dd")}/${fileName}`
+        let dnsUrl = dns(initUrl)
+        // 远程仓库已存在重名文件！
+        $("#msg").html($("#msg").html() + `<p style="color:#2cb144;" class="resource_box" >远程仓库已存在重名文件！<a href="${initUrl}" class="copyUrl">原始链接（点击复制）</a>&nbsp;<a href="${dnsUrl}" class="copyUrl" >加速链接（点击复制）</a> <p>`)
+        bindCopy(".resource_box",".copyUrl","href","click");
+        return;
+      }
+      console.log("error",errInfo)
       $("#msg").html($("#msg").html() + "<p style='color:red'>② 上传失败了，请检查配置与网络是否正常！  ┗|｀O′|┛ 嗷~~</p>")
     }
   })
