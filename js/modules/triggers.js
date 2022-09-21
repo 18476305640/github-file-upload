@@ -1,28 +1,9 @@
 // 引入要使用的函数
-import { githubUpload, toUplog } from './upload.js'
+import { githubUpload,UploadFromFile } from './upload.js'
 // 引入 jquery 
 import '../jquery.js'
 
-// 公共工具类
-function UploadFromFile(file) {
-  // 如果是DataTransferItem 就转为File
-  if(file.kind == "file" ) file = file.getAsFile();
-  if(file.size <= 0) return;
-    var fr = new FileReader(); //FileReader方法： https://developer.mozilla.org/zh-CN/docs/Web/API/FileReader
-    // 读取为base64格式的数据
-    fr.readAsDataURL(file);
-    fr.onload = function (e) {
-      let result = e.target.result
-      console.log("result", result)
-      let suffix = result.split("/")[1].split(";")[0]
-      suffix = suffix.indexOf("zip") >= 0 ? "zip" : suffix
-      // 如果是zip压缩文件，对后缀进行修改
-      let fileData = e.target.result.split(",")[1];
-      let fileName = new Date().getTime() + "." + suffix
-      toUplog(fileName, fileData)
-    }
 
-}
 // 数据格式转换函数
 function Base64ToBlob(base64) {
   var arr = base64.split(','), mime = arr[0].match(/:(.*?);/)[1],
@@ -47,24 +28,35 @@ function FileToBase64(file) {
 
 // 第一种触发方式： 点击“上传”
 $("#img_pre_show").click(function () {
-  if (window.FileReader) {
-    var reader = new FileReader();
-  } else {
-    console.log('你的浏览器不支持读取文件');
+  let files = window.currentChooseFiles;
+  if(files == null || files.length == 0) return;
+  
+  for(let i = 0; i < files.length; i++) {
+    let file = files[i];
+    console.log(file)
+    UploadFromFile(file);
   }
-  var myFile = document.querySelector('#myFile');
-  var file = myFile.files[0];
-  reader.readAsDataURL(file);
-  reader.onload = function (data) {
-    let namePath = $("#myFile").val()
-    let fileData = data.currentTarget.result.split(",")[1];
-    let fileName = namePath.substring(namePath.lastIndexOf("\\") + 1, namePath.length).trim()
-    toUplog(fileName, fileData);
-  };
-  reader.onerror = function () {
-    console.log('读取失败');
-    console.log(reader.error);
-  }
+  // if (window.FileReader) {
+  //   var reader = new FileReader();
+  // } else {
+  //   console.log('你的浏览器不支持读取文件');
+  // }
+  // var myFile = document.querySelector('#myFile');
+  // var file = myFile.files[0];
+  // reader.readAsDataURL(file);
+  // reader.onload = function (data) {
+  //   // 只要是图片，文件名就是时间戳
+  //   let namePath = $("#myFile").val()
+  //   let fileData = data.currentTarget.result.split(",")[1];
+  //   let fileName_char = namePath.substring(namePath.lastIndexOf("\\") + 1, namePath.length).trim().split(".")
+  //   let suffix = fileName_char[fileName_char.length - 1]
+  //   let fileName = new Date().getTime()+"."+suffix;
+  //   githubUpload(fileName, fileData);
+  // };
+  // reader.onerror = function () {
+  //   console.log('读取失败');
+  //   console.log(reader.error);
+  // }
 
 
 })

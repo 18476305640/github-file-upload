@@ -43,8 +43,15 @@ $(function () {
   $('#myFile').on('input', (e) => {
     var windowURL = window.URL || window.webkitURL;
     var dataURL = windowURL.createObjectURL($('#myFile')[0].files[0]);
-    console.log(dataURL)
-    $('#img_pre_show').attr('src', dataURL)
+    window.currentChooseFiles = $('#myFile')[0].files;
+    console.log("--=",)
+    if(window.currentChooseFiles[0].type.indexOf("image") == 0) {
+      // 上传的是图片
+      $('#img_pre_show').attr('src', dataURL)
+    }else {
+      $('#img_pre_show').attr('src',"../../img/file.png" )
+    }
+    
     $("#upload_hint").hide()
   })
 

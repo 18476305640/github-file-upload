@@ -12,8 +12,7 @@ function dns (url) {
   // 返回加速后的链接
   return dnsUrl + last_str;
 }
-let githubUpload = function githubUpload (fileName, fileData) {
-  console.log(fileName)
+let githubUpload = function (fileName, fileData,isImage = true) {
   $("#resource_box").html("")
   $("#msg").html("<p>① 正在上传，请稍等...</p>")
   $.ajax({
@@ -33,10 +32,17 @@ let githubUpload = function githubUpload (fileName, fileData) {
       let repoUrl = dns(data.content.download_url)
 
       // 将内容写到剪切板
-      navigator.clipboard.writeText(urlFormat(repoUrl, "md")).then(function () {
+      let finallyUrl = repoUrl;
+      
+      if(isImage) {
+        // 如果是图片用md图片格式进行包装
+        console.log(">>> 正在上传的是图片");
+        finallyUrl = urlFormat(repoUrl, "md")
+      }
+      navigator.clipboard.writeText(finallyUrl).then(function () {
         console.log('OK，Template copied to clipboard！')
         $("#msg").html($("#msg").html() + "<p style='color:#008040'>② 上传成功了，请查看剪切板！ヾ(^▽^*)))</p>")
-        if (repoUrl.indexOf(".zip") < 0) {
+        if (isImage) {
           $("#resource_box").html(`<img src="${repoUrl}" />`)
         }
 
@@ -50,7 +56,31 @@ let githubUpload = function githubUpload (fileName, fileData) {
     }
   })
 }
-let toUplog = function toUplog (fileName, fileData) {
-  githubUpload(fileName, fileData)
+
+// 公共工具类
+let UploadFromFile = function (file,fileName = null) {
+  // 如果是DataTransferItem 就转为File
+  if(file.kind == "file" ) file = file.getAsFile();
+  if(file.size <= 0) return;
+    var fr = new FileReader(); //FileReader方法： https://developer.mozilla.org/zh-CN/docs/Web/API/FileReader
+    // 读取为base64格式的数据
+    fr.readAsDataURL(file);
+    fr.onload = function (e) {
+      let result = e.target.result
+      
+      // 如果是zip压缩文件，对后缀进行修改
+      let fileData = e.target.result.split(",")[1];
+      fileName = fileName || file.name;
+      // 如果是图片，都以时间缀进行命名,否则是文件原名
+      let isImage = false;
+      if((result+"").indexOf("data:image") == 0) {
+        let suffix = fileName.split(".")[1];
+        fileName = new Date().getTime() + "." + suffix
+        isImage = true;
+      }
+      githubUpload(fileName, fileData,isImage)
+    }
+
 }
-export { githubUpload, toUplog }
+
+export { githubUpload, UploadFromFile }
