@@ -36,6 +36,7 @@ $("#img_pre_show").click(function () {
     console.log(file)
     UploadFromFile(file);
   }
+
   // if (window.FileReader) {
   //   var reader = new FileReader();
   // } else {

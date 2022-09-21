@@ -51,7 +51,7 @@ $(function () {
       // 上传的是图片
       $('#img_pre_show').attr('src', dataURL)
     }else {
-      $('#img_pre_show').attr('src',"../../img/file.png" )
+      $('#img_pre_show').attr('src',"img/file.png" )
     }
     
     $("#upload_hint").hide()
