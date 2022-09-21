@@ -17,7 +17,7 @@ function bindCopy(parent, target, targetAttr, even) {
     e.preventDefault();
     event.stopPropagation();
     // 将链接复制到剪切板
-    let fileInitUrl = $(target).attr(targetAttr)
+    let fileInitUrl = $(e.target).attr(targetAttr)
     navigator.clipboard.writeText(fileInitUrl).then(()=> {
       $(e.target).text("复制成功！\(￣︶￣*\))") //  $(e.target) 表示是点击的对象
     }, ()=> {
