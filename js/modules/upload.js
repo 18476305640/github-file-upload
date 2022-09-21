@@ -1,6 +1,7 @@
 import '../jquery.js'
 // 引入配置对象
 import configObj from './config.js'
+import '../utils.js'
 // dns加速
 function dns (url) {
   let dnsUrl =  "https://cdn.jsdelivr.net/gh"
