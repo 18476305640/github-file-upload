@@ -44,12 +44,12 @@ $(function () {
   $('#myFile').on('input', (e) => {
     // 清除上次文件的挂载！！
     window.currentChooseFiles = null;
-    var windowURL = window.URL || window.webkitURL;
-    var dataURL = windowURL.createObjectURL($('#myFile')[0].files[0]);
     // 将文件对象挂载到window对象上！！
     window.currentChooseFiles = $('#myFile')[0].files;
     if (window.currentChooseFiles[0].type.indexOf("image") == 0) {
       // 上传的是图片
+      var windowURL = window.URL || window.webkitURL;
+      var dataURL = windowURL.createObjectURL($('#myFile')[0].files[0]);
       $('#img_pre_show').attr('src', dataURL)
     } else {
       $('#img_pre_show').attr('src', "img/file.png")
