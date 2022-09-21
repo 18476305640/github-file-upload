@@ -1,7 +1,7 @@
 // 导入配置
 import configObj from './config.js'
 import '../jquery.js'
-import '/js/utils.js'
+import '../utils.js'
 $(function () {
   // 回显配置
   (function () {
