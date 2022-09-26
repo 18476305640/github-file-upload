@@ -78,8 +78,12 @@ let githubUpload = function (fileName, fileData,isImage = true) {
 // 公共工具类
 let UploadFromFile = function (file,fileName = null) {
   // 如果是DataTransferItem 就转为File
-  if(file.kind != "file" ) return; // 复制网页的图片，然后再到页面ctrl+v时，过滤类型为string的，然后不知道为什么接着传了一个file的过来，使上传成功，所有过滤掉string即可解决。
-  file = file.getAsFile();
+  if(file.kind == "file" ) {
+    file = file.getAsFile();
+  } else if(file.kind == "string" ) {
+    return;
+  }
+  
   if(file.size <= 0) return;
     var fr = new FileReader(); //FileReader方法： https://developer.mozilla.org/zh-CN/docs/Web/API/FileReader
     // 读取为base64格式的数据
