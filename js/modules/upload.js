@@ -77,32 +77,33 @@ let githubUpload = function (fileName, fileData,isImage = true) {
 
 // 公共工具类
 let UploadFromFile = function (file,fileName = null) {
+  console.log(file);
   // 如果是DataTransferItem 就转为File
-  if(file.kind == "file" ) {
-    file = file.getAsFile();
-  } else if(file.kind == "string" ) {
+
+  if( file.kind == 'file' && file instanceof DataTransferItem ) {
+    file = file.getAsFile(); // 如果是DataTransferItem 就转换成File类型
+  }else if(file.kind == 'string') { // 解决复制网页图片无法上传问题
     return;
   }
-  
-  if(file.size <= 0) return;
-    var fr = new FileReader(); //FileReader方法： https://developer.mozilla.org/zh-CN/docs/Web/API/FileReader
-    // 读取为base64格式的数据
-    fr.readAsDataURL(file);
-    fr.onload = function (e) {
-      let result = e.target.result
-      
-      // 如果是zip压缩文件，对后缀进行修改
-      let fileData = e.target.result.split(",")[1];
-      fileName = fileName || file.name;
-      // 如果是图片，都以时间缀进行命名,否则是文件原名
-      let isImage = false;
-      if((result+"").indexOf("data:image") == 0) {
-        let suffix = fileName.split(".")[1];
-        fileName = new Date().getTime() + "." + suffix
-        isImage = true;
-      }
-      githubUpload(fileName, fileData,isImage)
+  if(!(file instanceof File) || file.size <= 0) return; // 下面需要确保是File类型
+  var fr = new FileReader(); //FileReader方法： https://developer.mozilla.org/zh-CN/docs/Web/API/FileReader
+  // 读取为base64格式的数据
+  fr.readAsDataURL(file);
+  fr.onload = function (e) {
+    let result = e.target.result
+    
+    // 如果是zip压缩文件，对后缀进行修改
+    let fileData = e.target.result.split(",")[1];
+    fileName = fileName || file.name;
+    // 如果是图片，都以时间缀进行命名,否则是文件原名
+    let isImage = false;
+    if((result+"").indexOf("data:image") == 0) {
+      let suffix = fileName.split(".")[1];
+      fileName = new Date().getTime() + "." + suffix
+      isImage = true;
     }
+    githubUpload(fileName, fileData,isImage)
+  }
 
 }
 
