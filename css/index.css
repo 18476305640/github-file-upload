@@ -17,6 +17,7 @@
 #config > div > *:first-child {
   border-right: 3px solid #31c600;
   margin-right: 20px;
+  padding-right: 20px;
 }
 
 #choose_img {
@@ -60,8 +61,7 @@
 
 input {
   display: block;
-  width: 400px;
-  max-width: 60%;
+  min-width: 15em;
   border: none;
   padding: 5px;
 }
