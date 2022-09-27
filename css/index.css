@@ -2,10 +2,21 @@
   box-sizing: border-box;
   width: 100%;
   display: none;
+  
   background-color: #d8d8d8;
   padding: 20px;
   margin: 20px 0px;
   overflow: hidden;
+
+}
+#config > div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#config > div > *:first-child {
+  border-right: 3px solid #31c600;
+  margin-right: 20px;
 }
 
 #choose_img {

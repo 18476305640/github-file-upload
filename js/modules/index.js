@@ -12,13 +12,13 @@ $(function () {
     $("input[name='dns']").val(configObj.dns)
   })()
   // 配置的保存
-  let configButName = $("#config_control").text()
+  let configButName = $("#config_control").html()
   let default_config = {
 
   }
   $("#config_control").click(function () {
     if ($("#config").is(":visible")) {
-      $("#config_control").text(configButName)
+      $("#config_control").html(configButName)
       // 执行保存配置的操作
       configObj.token = $("input[name='token']").val()
       configObj.userAndRepo = $("input[name='userAndRepo']").val()
@@ -52,7 +52,7 @@ $(function () {
       var dataURL = windowURL.createObjectURL($('#myFile')[0].files[0]);
       $('#img_pre_show').attr('src', dataURL)
     } else {
-      $('#img_pre_show').attr('src', "img/file.png")
+      $('#img_pre_show').attr('src', "img/file.svg")
     }
     // 给资源绑定可点击复制的功能
     bindCopy(".resource_box",".copyUrl","href","click");

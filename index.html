@@ -12,6 +12,7 @@
   <script src="js/jquery.js"></script>
   <script src="js/date-format.js"></script>
   <script src="js/utils.js"></script>
+  <link rel="stylesheet" href="fontawesome/css/font-awesome.css"> 
 
 
 
@@ -29,31 +30,39 @@
 
 <body>
   <div id="config_box">
-    <button id="config_control">配置 github</button>
+    <button id="config_control"><i class="fa fa-cog" aria-hidden="true" style="font-size: 1em;"></i>&nbsp;&nbsp;配置</button>
     <span style="color:#787878;font-size: 1rem;">&nbsp;公告：本客户端支持任意文件格式上传（注意仅支持单文件上传）！ </span>
     <div id="config">
-      <table>
-        <tr>
-          <td>token：</td>
-          <td><input type="text" name="token"></td>
-        </tr>
-        <tr>
-          <td>用户名/仓库名：</td>
-          <td><input type="text" name="userAndRepo" placeholder="比如:“zhuangjie/img-repo”"></td>
-        </tr>
-        <tr>
-          <td>存放分支：</td>
-          <td> <input type="text" name="branch" /></td>
-        </tr>
-        <tr>
-          <td>存放路径：</td>
-          <td><input type="text" name="path" placeholder="比如：“/images”" /></td>
-        </tr>
-        <tr>
-          <td>加速链接（可选）：</td>
-          <td><input type="text" name="dns" placeholder="默认：https://cdn.jsdelivr.net/gh" /></td>
-        </tr>
-      </table>
+      <div>
+        <table>
+          <tr>
+            <td>token：</td>
+            <td><input type="text" name="token"></td>
+          </tr>
+          <tr>
+            <td>用户名/仓库名：</td>
+            <td><input type="text" name="userAndRepo" placeholder="比如:“zhuangjie/img-repo”"></td>
+          </tr>
+          <tr>
+            <td>存放分支：</td>
+            <td> <input type="text" name="branch" /></td>
+          </tr>
+          <tr>
+            <td>存放路径：</td>
+            <td><input type="text" name="path" placeholder="比如：“/images”" /></td>
+          </tr>
+          <tr>
+            <td>加速链接（可选）：</td>
+            <td><input type="text" name="dns" placeholder="默认：https://cdn.jsdelivr.net/gh" /></td>
+          </tr>
+        </table>
+        <div>
+          <h4>使用说明</h4>
+          <p>方式一：选择图片后，点击图片上传~</p>
+          <p>方式二：在此页面，粘贴图片~</p>
+          <p>方式三：将图片拖拽到此框中~</p>
+        </div>
+      </div>
 
     </div>
   </div>
@@ -62,16 +71,16 @@
     <input type="file" name="content" id="myFile" style="display: none;">
     <img src="" id="img_pre_show" />
     <div id="upload_hint">
-      <p>方式一：选择图片后，点击图片上传~</p>
-      <p>方式二：在此页面，粘贴图片~</p>
-      <p>方式三：将图片拖拽到此框中~</p>
+      <i class="fa fa-cloud-upload" aria-hidden="true" style="font-size: 5em;"></i>
+      
+      
     </div>
   </div>
 
   <br />
   <div id="msg">
-    <p>请在此页面粘贴！ ☆⌒(*＾-゜)v THX!!</p>
-
+    <p>请在此页面粘贴！ ☆⌒(*＾-゜)v THX!! </p>
+    
   </div>
   <div id="resource_box" class="resource_box">
 
