@@ -27,7 +27,7 @@ $(function () {
       configObj.dns = $("input[name='dns']").val()
       localStorage.setItem("config", JSON.stringify(configObj));
     } else {
-      $("#config_control").text("保存")
+      $("#config_control").html(`<i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;&nbsp;保存`)
 
     }
     $("#config").slideToggle();
