@@ -52,6 +52,7 @@ let githubUpload = function (fileName, fileData,isImage = true) {
           $("#resource_box").html(`<p style="color:#2cb144;" class="resource_box" > <a href="${initUrl}" class="copyUrl" >文件原链<i class="fa fa-clone" aria-hidden="true"></i></a>&nbsp;&nbsp;&nbsp;<a href="${dnsUrl}" class="copyUrl">加速链接<i class="fa fa-clone" aria-hidden="true"></i></a></p>`)
           $("#msg").html($("#msg").html() + `<span style="background:#fff000;" >( 默认复制加速链接，如果是一些特殊文件加速链接可能打不开，所以在这里给出了原链~ )<span>`)
         }
+        
 
       }, function () {
         $("#msg").html("<span style='color:red'>Error,Unable to write to clipboard. :-(</span>")
@@ -65,14 +66,14 @@ let githubUpload = function (fileName, fileData,isImage = true) {
         // 远程仓库已存在重名文件！
         $("#msg").html($("#msg").html() + `<p style="color:#2cb144;" class="resource_box" >远程仓库已存在重名文件！<a href="${initUrl}" class="copyUrl">原始链接<i class="fa fa-clone" aria-hidden="true"></i></a>&nbsp;&nbsp;&nbsp;<a href="${dnsUrl}" class="copyUrl" >加速链接<i class="fa fa-clone" aria-hidden="true"></i></a> <p>`)
         $("#msg").html($("#msg").html() + `<span style="background:#fff000;" >( 默认复制加速链接，如果是一些特殊文件加速链接可能打不开，所以在这里给出了原链~ )<span>`)
-        
-        bindCopy(".resource_box",".copyUrl","href","click");
         return;
       }
       console.log("error",errInfo)
       $("#msg").html($("#msg").html() + "<p style='color:red'>② 上传失败了，请检查配置与网络是否正常！  ┗|｀O′|┛ 嗷~~</p>")
     }
   })
+  // 给资源链接绑定copy功能
+  bindCopy(".resource_box",".copyUrl","href","click");
 }
 
 // 公共工具类
