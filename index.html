@@ -35,15 +35,20 @@
         <table>
           <tr>
             <td>token：</td>
-            <td><input type="text" name="token"></td>
+            <td><input type="text" name="token" placeholder=">>失去焦点自动检验<<" ></td>
           </tr>
           <tr>
             <td>用户名/仓库名：</td>
-            <td><input type="text" name="userAndRepo" placeholder="比如:“zhuangjie/img-repo”"></td>
+            <td id="userAndRepo_td">
+              <select name="userAndRepo">
+                <option value ="">--需要检验token--</option>
+              </select>
+              <!-- <input type="text" name="userAndRepo" placeholder="检验超时，请手动输入，比如：“zhuangjie/img-repo”"> -->
+            </td>
           </tr>
           <tr>
             <td>存放分支：</td>
-            <td> <input type="text" name="branch" /></td>
+            <td> <input type="text" name="branch" placeholder="比如：master" /></td>
           </tr>
           <tr>
             <td>存放路径：</td>

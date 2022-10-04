@@ -1,0 +1,4 @@
+###
+GET https://api.github.com/user/repos HTTP/1.1
+Accept: application/vnd.github+json
+Authorization: Bearer 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

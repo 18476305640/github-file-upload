@@ -61,7 +61,17 @@
 
 input {
   display: block;
-  min-width: 15em;
+  width: 15em;
   border: none;
   padding: 5px;
+}
+select {
+  display: block;
+  width: 15.7em;
+  border: none;
+  padding: 5px;
+}
+table {
+  display: block;
+  overflow: hidden;
 }
