@@ -63,9 +63,14 @@ $("#img_pre_show").click(function () {
 })
 // 第二种触发: 粘贴动作
 document.addEventListener('paste', function (e) {
+  
   var files = e.clipboardData.items;
+  
   for (var i = 0; i < files.length; i++) {
     var file = files[i];
+    // file.getAsString(function (s){
+
+    // });
     UploadFromFile(file);
   }
 });
@@ -92,4 +97,19 @@ $("#choose_img")[0].addEventListener("drop", function (e) {
 
 
 
+
 }, false)
+
+// 第二种触发: 粘贴动作
+document.addEventListener('paste', function (e) {
+  var files = e.clipboardData.items;
+  for (var i = 0; i < files.length; i++) {
+    var file = files[i];
+    if(file.kind != "string") continue;
+    file.getAsString(function (sourceUrl){
+      if(sourceUrl.indexOf("http") != 0) return;
+      console.log("*** 是http链接")
+      alert("暂不支持图片链接上传~")
+    });
+  }
+});
