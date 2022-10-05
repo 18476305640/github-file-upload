@@ -64,12 +64,14 @@ input {
   width: 15em;
   border: none;
   padding: 5px;
+  background-color: #fff;
 }
 select {
   display: block;
   width: 15.7em;
   border: none;
   padding: 5px;
+  background-color: #fff;
 }
 table {
   display: block;
