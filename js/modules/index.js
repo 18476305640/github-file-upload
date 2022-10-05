@@ -104,7 +104,12 @@ $(function () {
     // console.log("失去焦点了")
     let token = $("input[name^='token']").val();
     // 如果没有修改，则不做任何操作
-    if(configObj.token == token) return;
+    if(configObj.token == token && window.tmp_userAndRepo != null) return;
+    $("#userAndRepo_td").html(`
+      <select name="userAndRepo">
+        <option value ="">--正在检验中--</option>
+      </select>
+      `);
     // 是否检验
     window.isCheck = false;
     // 如果超时，将显示输入框形式而不是下拉框
@@ -112,7 +117,7 @@ $(function () {
       console.log("check",window.isCheck)
       if(window.isCheck) return;
       $("#userAndRepo_td").html(`<input type="text" name="userAndRepo" placeholder="检验超时，请手动输入，比如：“zhuangjie/img-repo”">`)
-    },2000)
+    },3000)
     // 发起请求
     $.ajax({
       type: 'get',
