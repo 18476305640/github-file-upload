@@ -13,9 +13,34 @@ function dns (url) {
   // 返回加速后的链接
   return dnsUrl + last_str;
 }
+
+
+// 过渡式更改标题的函数
+function transitionChangeTitle(title,transition_time = 0) {
+  if (!window.recoveTitle) {
+    // 恢复之前的标题
+    window.recoveTitle = (function recoverTitle(){
+      let title = document.title;
+      return function(){
+        setTimeout(function() {
+          document.title = title;
+        },window.recoveTitleTime)
+      }
+    })();
+  }
+  document.title = title;
+  // 如果没有设置恢复时间，就不恢复
+  if(transition_time != 0 && transition_time != null) {
+    window.recoveTitleTime = transition_time;
+    window.recoveTitle();
+  }
+}
 let githubUpload = function (fileName, fileData,isImage = true) {
+  
+
   $("#resource_box").html("")
   $("#msg").html("<p>① 正在上传，请稍等...</p>")
+  transitionChangeTitle("ing...");
   $.ajax({
     type: 'put',
     url: `https://api.github.com/repos/${configObj.userAndRepo}/contents${configObj.path}/${new Date().Format("yyyy")}/${new Date().Format("MM")}/${new Date().Format("dd")}/${fileName}`,
@@ -31,21 +56,20 @@ let githubUpload = function (fileName, fileData,isImage = true) {
     success (data) {
       // 对原始链接进行nds加速
       let initUrl = data.content.download_url
-      console.log("=1=",initUrl)
       let dnsUrl = dns(initUrl)
-      console.log("=2=",dnsUrl)
       // 将内容写到剪切板
       let finallyUrl = dnsUrl;
       
       if(isImage) {
         // 如果是图片用md图片格式进行包装
-        console.log(">>> 正在上传的是图片");
+        // console.log(">>> 正在上传的是图片");
         finallyUrl = urlFormat(dnsUrl, "md")
       }
       console.log(initUrl)
       navigator.clipboard.writeText(finallyUrl).then(function () {
-        console.log('OK，Template copied to clipboard！')
+        console.log('OK，Template copied to clipboard！')        
         $("#msg").html($("#msg").html() + "<p style='color:#008040'>② 上传成功了，请查看剪切板！ヾ(^▽^*)))</p>")
+        transitionChangeTitle("success",1000);
         if (isImage) {
           $("#resource_box").html(`<img src="${dnsUrl}" />`)
         }else {
@@ -54,10 +78,9 @@ let githubUpload = function (fileName, fileData,isImage = true) {
           // 给资源链接绑定copy功能
           bindCopy(".resource_box",".copyUrl","href","click");
         }
-        
-
       }, function () {
         $("#msg").html("<span style='color:red'>Error,Unable to write to clipboard. :-(</span>")
+        transitionChangeTitle("No way!",1);
       });
 
     },
@@ -70,12 +93,15 @@ let githubUpload = function (fileName, fileData,isImage = true) {
         $("#msg").html($("#msg").html() + `<span style="background:#fff000;" >( 默认复制加速链接，如果是一些特殊文件加速链接可能打不开，所以在这里给出了原链~ )<span>`)
         // 给资源链接绑定copy功能
         bindCopy(".resource_box",".copyUrl","href","click");
+        transitionChangeTitle("ed",1000);
         return;
       }
       // console.log("error",errInfo)
+      transitionChangeTitle("fail",1000);
       $("#msg").html($("#msg").html() + "<p style='color:red'>② 上传失败了，请检查配置与网络是否正常！  ┗|｀O′|┛ 嗷~~</p>")
     }
   })
+  
   
 }
 
