@@ -57,6 +57,7 @@
   padding: 8px 20px;
   border: none;
   border-radius: 5px;
+  margin-right: 7px;
 }
 
 input {
@@ -87,4 +88,17 @@ table {
 }
 #upload_hint a {
   text-decoration:none;
+}
+
+#tis {
+  color:#787878;
+  font-size: 1rem;
+  text-decoration: none;
+}
+#tis > a{
+  text-decoration: none;
+}
+/*默认隐藏*/
+#tis2 {
+  display: none;
 }

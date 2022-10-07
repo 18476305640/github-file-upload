@@ -49,6 +49,7 @@ $(function () {
   })()
   // 配置的保存
   let configButName = $("#config_control").html()
+  let tis_content = $("#tis").html();
   let default_config = {
   }
   $("#config_control").click(function () {
@@ -64,8 +65,10 @@ $(function () {
       configObj.path = $("input[name='path']").val()
       configObj.dns = $("input[name='dns']").val()
       localStorage.setItem("config", JSON.stringify(configObj));
+      $("#tis").html(tis_content);
     } else {
       $("#config_control").html(`<i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;&nbsp;保存`)
+      $("#tis").html("<a href='http://info.uplog.top/log/queryByLogId/290' target='_blank'>不会配置？点击去看教程！</a>");
 
     }
     $("#config").slideToggle();
