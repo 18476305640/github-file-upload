@@ -77,3 +77,14 @@ table {
   display: block;
   overflow: hidden;
 }
+#upload_hint > i{
+  font-size: 7em;
+}
+#upload_hint {
+  text-align: center;
+  font-size: 0.6em;
+  
+}
+#upload_hint a {
+  text-decoration:none;
+}
