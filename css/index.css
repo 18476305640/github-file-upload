@@ -57,7 +57,7 @@
   padding: 8px 20px;
   border: none;
   border-radius: 5px;
-  margin-right: 7px;
+  margin: 0px 7px 7px 0px;
 }
 
 input {
@@ -92,8 +92,9 @@ table {
 
 #tis {
   color:#787878;
-  font-size: 1rem;
+  font-size: 0.5rem;
   text-decoration: none;
+
 }
 #tis > a{
   text-decoration: none;
