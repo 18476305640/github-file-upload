@@ -13,6 +13,7 @@ p,span,i,td,a {
   color: #ffffff;
 }
 
+
 #config input,#config select {
   color: #7d7d7d !important;
 }
@@ -62,7 +63,7 @@ p,span,i,td,a {
 }
 
 #config_control {
-  padding: 8px 15px;
+  padding: 7px 13px;
   border: none;
   border-radius: 5px;
   margin: 7px;
@@ -86,7 +87,7 @@ input {
 }
 select {
   display: block;
-  width: 15.7em;
+  width: 15.75em;
   border: none;
   padding: 5px;
   background-color: #fff;
@@ -100,12 +101,10 @@ table {
 }
 #upload_hint {
   text-align: center;
-  font-size: 0.6em;
+  font-size: 0.8em;
   
 }
-#upload_hint a {
-  text-decoration:none;
-}
+
 
 #tis {
   /* color:#787878; */
