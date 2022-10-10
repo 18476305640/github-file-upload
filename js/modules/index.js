@@ -68,7 +68,7 @@ $(function () {
       $("#tis").html(tis_content);
     } else {
       $("#config_control").html(`<i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;&nbsp;保存`)
-      $("#tis").html("<a href='http://info.uplog.top/log/queryByLogId/290' target='_blank'>不会配置？点击去看教程！</a>");
+      $("#tis").html("<a href='http://info.uplog.top/log/queryByLogId/290' target='_blank'>不会配置？点击去看教程<i class='fa fa-external-link' aria-hidden='true'></i> </a>");
 
     }
     $("#config").slideToggle();
