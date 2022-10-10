@@ -1,21 +1,17 @@
+*{
+  margin: 0px;
+  padding: 0px;
+}
 #config {
   box-sizing: border-box;
   width: 100%;
   display: none;
   
-  background-color: #787878;
+  background-color: #cccccc;
   padding: 20px;
   margin: 20px 0px;
   overflow: hidden;
 
-}
-p,span,i,td,a {
-  color: #ffffff;
-}
-
-
-#config input,#config select {
-  color: #7d7d7d !important;
 }
 
 #config > div {
