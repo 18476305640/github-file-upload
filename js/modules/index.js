@@ -68,7 +68,7 @@ $(function () {
       $("#tis").html(tis_content);
     } else {
       $("#config_control").html(`<i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;&nbsp;保存`)
-      $("#tis").html("<a href='http://info.uplog.top/log/queryByLogId/290' target='_blank'>不会配置？点击去看教程&nbsp;<i class='fa fa-external-link' aria-hidden='true'></i> </a>");
+      $("#tis").html("<a href='https://github.com/18476305640/github-file-upload/wiki/%E4%BD%BF%E7%94%A8%E7%9A%84%E8%AF%B4%E6%98%8E' target='_blank'>不会配置？点击去看教程&nbsp;<i class='fa fa-external-link' aria-hidden='true'></i> </a>");
 
     }
     $("#config").slideToggle();
