@@ -2,6 +2,9 @@
   margin: 0px;
   padding: 0px;
 }
+#msg,#resource_box {
+  padding: 7px;
+}
 #config {
   box-sizing: border-box;
   width: 100%;
