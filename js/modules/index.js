@@ -92,9 +92,14 @@ $(function () {
       var windowURL = window.URL || window.webkitURL;
       var dataURL = windowURL.createObjectURL($('#myFile')[0].files[0]);
       $('#img_pre_show').attr('src', dataURL)
+      
     } else {
       $('#img_pre_show').attr('src', "img/file.svg")
     }
+    // 让图片显示
+    $('#img_pre_show').css({
+      "display":"block"
+    })
     // 给资源绑定可点击复制的功能
     bindCopy(".resource_box", ".copyUrl", "href", "click");
 
