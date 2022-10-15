@@ -124,12 +124,13 @@ table {
   color: #008040;
 }
 
-#compression_check_td,td {
+#compression_check_td {
   background-color: #fff;
   display: flex;
   justify-content:space-around;
   align-items: center;
   overflow: hidden;
+  
 }
 #compression_check_td > input {
   border:none;
