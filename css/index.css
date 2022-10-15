@@ -118,3 +118,12 @@ table {
 #tis2 {
   display: none;
 }
+
+/**上传成功后的文字样式**/
+#uploadSuccessTis {
+  color: #008040;
+}
+
+#compression_check_td {
+  background-color: #fff;
+}

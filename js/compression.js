@@ -5,16 +5,23 @@ function canvasToImageFile(select,originFile,callback) {
     canvas.toBlob(function (blobObj) {
         // 转为了二进制
         let genFileObj = new File([blobObj],originFile.name,{type: originFile.type});
-        console.log(genFileObj.size , originFile.size)
+        console.log("正在判断是否要使用压缩上传：压缩后的大小："+genFileObj.size +"，原始大小"+ originFile.size)
+        // 最终决定是否要使用压缩的上传
         callback(genFileObj.size < originFile.size?genFileObj:originFile)
-    },originFile.type,0.95); // 属于压缩关键第二部分
+    },originFile.type,0.9); // 属于压缩关键第二部分
 }
 // 判断是否为图片
 function isImageFile(file) {
     if(file.type.indexOf("image") >= 0) return true;
     return false;
 }
-function ImgFileCompression(imgFile,callback) {
+function ImgFileCompression(imgFile,isCompressionCallback ,callback) {
+    // 如果逻辑回调返回false表示不进行压缩，则  imgFile 就是压缩的对象，等于没压缩
+    console.log("是否压缩",isCompressionCallback())
+    if(! isCompressionCallback()) {
+        callback(imgFile);
+        return;
+    }
     // 如果不是文件跳过压缩
     if(! isImageFile(imgFile) || imgFile == null ) {
         callback(imgFile);
@@ -34,7 +41,7 @@ function ImgFileCompression(imgFile,callback) {
             // 获取到了宽度与高度
             const originHeight = img.height;
             const originWidth = img.width;
-            // 计算出压缩后的宽度与高度
+            // 计算出压缩后的宽度与高度，如果压缩后宽度小于600，使用原始图片宽高
             let compressedWidth = originWidth*ratio >= 600?originWidth*ratio:originWidth;
             let compressedHeight = originWidth*ratio >= 600?originHeight*ratio:originHeight;
             

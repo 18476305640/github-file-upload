@@ -35,8 +35,8 @@ function transitionChangeTitle(title,transition_time = 0) {
     window.recoveTitle();
   }
 }
+// 主要给 UploadFromFile 使用，是UploadFromFile的支撑
 let githubUpload = function (fileName, fileData,isImage = true) {
-  
 
   $("#resource_box").html("")
   $("#msg").html("<p>① 正在上传，请稍等...</p>")
@@ -68,7 +68,7 @@ let githubUpload = function (fileName, fileData,isImage = true) {
       console.log(initUrl)
       navigator.clipboard.writeText(finallyUrl).then(function () {
         console.log('OK，Template copied to clipboard！')        
-        $("#msg").html($("#msg").html() + "<p style='color:#008040'>② 上传成功了，请查看剪切板！ヾ(^▽^*)))</p>")
+        $("#msg").html($("#msg").html() + "<p id='uploadSuccessTis'>② 上传成功了，请查看剪切板！ヾ(^▽^*)))</p>")
         transitionChangeTitle("success",1000);
         if (isImage) {
           $("#resource_box").html(`<img src="${dnsUrl}" />`)
@@ -117,8 +117,10 @@ let UploadFromFile = function (file,fileName = null) {
   }
   if(!(file instanceof File) || file.size <= 0) return; // 下面需要确保是File类型
   var fr = new FileReader(); //FileReader方法： https://developer.mozilla.org/zh-CN/docs/Web/API/FileReader
-  // 如果是图片进行压缩
-  ImgFileCompression(file,(compressionFile)=>{
+  // 如果是图片进行压缩，如果不是不压缩 file == compressionFile
+  ImgFileCompression(file,()=>{
+    return (JSON.parse(localStorage.getItem("config")).compression) == 1?true:false;
+  },(compressionFile)=>{
       // 读取为base64格式的数据
       fr.readAsDataURL(compressionFile);
       fr.onload = function (e) {
@@ -136,21 +138,10 @@ let UploadFromFile = function (file,fileName = null) {
       }
   })
 
-  // // 读取为base64格式的数据
-  // fr.readAsDataURL(file);
-  // fr.onload = function (e) {
-  //   let result = e.target.result
-  //   let fileData = e.target.result.split(",")[1];
-  //   fileName = fileName || file.name;
-  //   // 如果是图片，都以时间缀进行命名,否则是文件原名
-  //   let isImage = false;
-  //   if((result+"").indexOf("data:image") == 0) {
-  //     let suffix = fileName.split(".")[1];
-  //     fileName = new Date().getTime() + "." + suffix
-  //     isImage = true;
-  //   }
-  //   githubUpload(fileName, fileData,isImage)
-  // }
+  
+  
+
+
 
 }
 

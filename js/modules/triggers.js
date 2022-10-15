@@ -26,7 +26,34 @@ function FileToBase64(file) {
 
 
 
-// 第一种触发方式： 点击“上传”
+// 【第一种】触发方式： 点击选择“上传”
+$('#myFile').on('input', (e) => {
+  // 清除上次文件的挂载！！
+  window.currentChooseFiles = null;
+  // 将文件对象挂载到window对象上！！
+  window.currentChooseFiles = $('#myFile')[0].files;
+  if (window.currentChooseFiles[0].type.indexOf("image") == 0) {
+    // 上传的是图片
+    var windowURL = window.URL || window.webkitURL;
+    var dataURL = windowURL.createObjectURL($('#myFile')[0].files[0]);
+    $('#img_pre_show').attr('src', dataURL)
+    $('#img_pre_show').attr('isImg', "1")
+
+  } else {
+    $('#img_pre_show').attr('src', "img/file.svg")
+    $('#img_pre_show').attr('isImg', "0")
+  }
+  
+  // 让图片显示
+  $('#img_pre_show').css({
+    "display":"block"
+  })
+  // 给资源绑定可点击复制的功能
+  bindCopy(".resource_box", ".copyUrl", "href", "click");
+
+  $("#upload_hint").hide()
+})
+// 点击图片进行上传时触发
 $("#img_pre_show").click(function () {
   let files = window.currentChooseFiles;
   if(files == null || files.length == 0) return;
@@ -37,45 +64,17 @@ $("#img_pre_show").click(function () {
     UploadFromFile(file);
   }
 
-  // if (window.FileReader) {
-  //   var reader = new FileReader();
-  // } else {
-  //   console.log('你的浏览器不支持读取文件');
-  // }
-  // var myFile = document.querySelector('#myFile');
-  // var file = myFile.files[0];
-  // reader.readAsDataURL(file);
-  // reader.onload = function (data) {
-  //   // 只要是图片，文件名就是时间戳
-  //   let namePath = $("#myFile").val()
-  //   let fileData = data.currentTarget.result.split(",")[1];
-  //   let fileName_char = namePath.substring(namePath.lastIndexOf("\\") + 1, namePath.length).trim().split(".")
-  //   let suffix = fileName_char[fileName_char.length - 1]
-  //   let fileName = new Date().getTime()+"."+suffix;
-  //   githubUpload(fileName, fileData);
-  // };
-  // reader.onerror = function () {
-  //   console.log('读取失败');
-  //   console.log(reader.error);
-  // }
-
-
 })
-// 第二种触发: 粘贴动作
+// 【第二种】粘贴动作方式
 document.addEventListener('paste', function (e) {
-  
   var files = e.clipboardData.items;
-  
   for (var i = 0; i < files.length; i++) {
     var file = files[i];
-    // file.getAsString(function (s){
-
-    // });
     UploadFromFile(file);
   }
 });
 
-// 第三种方式
+// 【第三种】拖拽方式
 $("#choose_img")[0].addEventListener("dragover", function (e) {
   e.preventDefault();
   e.stopPropagation();
@@ -94,13 +93,9 @@ $("#choose_img")[0].addEventListener("drop", function (e) {
       UploadFromFile(file);
     }
   }
-
-
-
-
 }, false)
 
-// 第二种触发: 粘贴动作
+// 【第四种-开发中】触发: 粘贴资源URL动作
 document.addEventListener('paste', function (e) {
   var files = e.clipboardData.items;
   for (var i = 0; i < files.length; i++) {

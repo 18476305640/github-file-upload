@@ -14,10 +14,8 @@ window.PlaceToSelect = function(current_repos = window.tmp_userAndRepo) {
   $("select[name^='userAndRepo']").html("<option value =''>--检验成功，请选择--</option>" + options)
 }
 $(function () {
-  
   // 回显配置
   //回显html前准备
-  
   (function () {
     $("input[name='token']").val(configObj.token)
     // 下拉框的数据回显
@@ -47,6 +45,10 @@ $(function () {
     $("input[name='branch']").val(configObj.branch)
     $("input[name='path']").val(configObj.path)
     $("input[name='dns']").val(configObj.dns)
+    // 压缩配置回显
+    if(configObj.compression != null && configObj.compression == 1 ) {
+      $("input[name='compression']").attr('checked',true)
+    }
   })()
   // 配置的保存
   let configButName = $("#config_control").html()
@@ -65,6 +67,7 @@ $(function () {
       configObj.branch = $("input[name='branch']").val()
       configObj.path = $("input[name='path']").val()
       configObj.dns = $("input[name='dns']").val()
+      configObj.compression = $("input[name='compression']").is(':checked')?1:0;
       localStorage.setItem("config", JSON.stringify(configObj));
       $("#tis").html(tis_content);
     } else {
@@ -83,58 +86,14 @@ $(function () {
     $("#choose_img > input[name='content']").click()
   })
 
-  //选择后触发图片压缩，然后进行“偷天换日”
-  var img=document.getElementById("img_pre_show");
-  // 当上面的图片加载时触发压缩，进行“偷天换日”
-  img.onload = function(e) {
-    if($('#img_pre_show').attr('isImg') == "1") {
-      let file = $('#myFile')[0].files[0] || window.currentChooseFiles[0];
-      ImgFileCompression(file,(compressionFile)=>{
-        // 进行“偷天换日”
-        window.window.currentChooseFiles = [compressionFile]
-      })
-    }
-    
-  }
 
-  $('#myFile').on('input', (e) => {
-    // 清除上次文件的挂载！！
-    window.currentChooseFiles = null;
-    // 将文件对象挂载到window对象上！！
-    window.currentChooseFiles = $('#myFile')[0].files;
-    if (window.currentChooseFiles[0].type.indexOf("image") == 0) {
-      // 上传的是图片
-      var windowURL = window.URL || window.webkitURL;
-      var dataURL = windowURL.createObjectURL($('#myFile')[0].files[0]);
-      $('#img_pre_show').attr('src', dataURL)
-      $('#img_pre_show').attr('isImg', "1")
-      // 进行压缩，进行“偷天换日”
-      // let file = $('#myFile')[0].files[0] || window.currentChooseFiles[0];
-      // ImgFileCompression(file,(compressionFile)=>{
-      //     window.window.currentChooseFiles = [compressionFile]
-      // })
-    } else {
-      $('#img_pre_show').attr('src', "img/file.svg")
-      $('#img_pre_show').attr('isImg', "0")
-    }
-    
-    // 让图片显示
-    $('#img_pre_show').css({
-      "display":"block"
-    })
-    // 给资源绑定可点击复制的功能
-    bindCopy(".resource_box", ".copyUrl", "href", "click");
-
-    $("#upload_hint").hide()
-  })
+  
 
   // 当token输入框失去焦点事件
   $("input[name^='token']").blur(function (e) {
-    
     // console.log("失去焦点了")
     let token = $("input[name^='token']").val();
-    // 如果没有修改，则不做任何操作
-    if(configObj.token == token && window.tmp_userAndRepo != null) return;
+
     $("#userAndRepo_td").html(`
       <select name="userAndRepo">
         <option value ="">--正在检验中--</option>

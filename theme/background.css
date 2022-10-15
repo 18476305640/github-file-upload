@@ -150,14 +150,19 @@
 /*项目特有*/
 p,span,i,td,a {
     color: #ffffff;
-  }
-  
-  
-  #config input,#config select {
-    color: #7d7d7d !important;
-  }
+}
 
-  #config {
+
+#config input,#config select {
+    color: #7d7d7d !important;
+}
+
+#config {
     background-color: #787878 !important;
-  }
+}
+
+/**上传成功后的文字样式**/
+#uploadSuccessTis {
+    color: #7cf700 !important;
+}
   
