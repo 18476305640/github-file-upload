@@ -117,23 +117,40 @@ let UploadFromFile = function (file,fileName = null) {
   }
   if(!(file instanceof File) || file.size <= 0) return; // 下面需要确保是File类型
   var fr = new FileReader(); //FileReader方法： https://developer.mozilla.org/zh-CN/docs/Web/API/FileReader
-  // 读取为base64格式的数据
-  fr.readAsDataURL(file);
-  fr.onload = function (e) {
-    let result = e.target.result
-    
-    // 如果是zip压缩文件，对后缀进行修改
-    let fileData = e.target.result.split(",")[1];
-    fileName = fileName || file.name;
-    // 如果是图片，都以时间缀进行命名,否则是文件原名
-    let isImage = false;
-    if((result+"").indexOf("data:image") == 0) {
-      let suffix = fileName.split(".")[1];
-      fileName = new Date().getTime() + "." + suffix
-      isImage = true;
-    }
-    githubUpload(fileName, fileData,isImage)
-  }
+  // 如果是图片进行压缩
+  ImgFileCompression(file,(compressionFile)=>{
+      // 读取为base64格式的数据
+      fr.readAsDataURL(compressionFile);
+      fr.onload = function (e) {
+        let result = e.target.result
+        let fileData = e.target.result.split(",")[1];
+        fileName = fileName || file.name;
+        // 如果是图片，都以时间缀进行命名,否则是文件原名
+        let isImage = false;
+        if((result+"").indexOf("data:image") == 0) {
+          let suffix = fileName.split(".")[1];
+          fileName = new Date().getTime() + "." + suffix
+          isImage = true;
+        }
+        githubUpload(fileName, fileData,isImage);
+      }
+  })
+
+  // // 读取为base64格式的数据
+  // fr.readAsDataURL(file);
+  // fr.onload = function (e) {
+  //   let result = e.target.result
+  //   let fileData = e.target.result.split(",")[1];
+  //   fileName = fileName || file.name;
+  //   // 如果是图片，都以时间缀进行命名,否则是文件原名
+  //   let isImage = false;
+  //   if((result+"").indexOf("data:image") == 0) {
+  //     let suffix = fileName.split(".")[1];
+  //     fileName = new Date().getTime() + "." + suffix
+  //     isImage = true;
+  //   }
+  //   githubUpload(fileName, fileData,isImage)
+  // }
 
 }
 

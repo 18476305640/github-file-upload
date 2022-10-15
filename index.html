@@ -20,6 +20,7 @@
     <script src="js/date-format.js"></script>
     <script src="js/utils.js"></script>
     <script src="js/modules/pc_mobile.js"></script>
+    <script src="js/compression.js"></script>
     
 
     <script type="module">
@@ -29,6 +30,7 @@
       import "./js/modules/triggers.js";
       // 导入动作
       import "./js/modules/index.js";
+      
     </script>
   </head>
 
@@ -100,6 +102,7 @@
     <div id="choose_img">
       <input type="file" name="content" id="myFile" style="display: none" />
       <img src="" id="img_pre_show" />
+      <div id="canvas_box" style="display:none"></div>
       <div id="upload_hint">
         <i class="fa fa-cloud-upload" aria-hidden="true"></i>
         <br />
