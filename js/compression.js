@@ -1,4 +1,4 @@
-function canvasToImageFile(select,originFile,callback) {
+function canvasToImageFile(select,originFile,ratio,callback) {
     var canvas = document.querySelector(select);
     // 转为文件
     // canvas转为blob并上传
@@ -8,31 +8,28 @@ function canvasToImageFile(select,originFile,callback) {
         console.log("正在判断是否要使用压缩上传：压缩后的大小："+genFileObj.size +"，原始大小"+ originFile.size)
         // 最终决定是否要使用压缩的上传
         callback(genFileObj.size < originFile.size?genFileObj:originFile)
-    },originFile.type,0.9); // 属于压缩关键第二部分
+    },originFile.type,ratio); // 属于压缩关键第二部分
 }
 // 判断是否为图片
 function isImageFile(file) {
-    if(file.type.indexOf("image") >= 0) return true;
+    if(file != null && file.type.indexOf("image") >= 0) return true;
     return false;
 }
-function ImgFileCompression(imgFile,isCompressionCallback ,callback) {
-    // 如果逻辑回调返回false表示不进行压缩，则  imgFile 就是压缩的对象，等于没压缩
-    console.log("是否压缩",isCompressionCallback())
-    if(! isCompressionCallback()) {
-        callback(imgFile);
+function ImgFileCompression(originFile,compression_config = "" ,isCompressionCallback,callback) {
+    let compression_config_arr = compression_config.split(":");
+    let widthWithHeightRatio = compression_config_arr[0]?parseFloat(compression_config_arr[0]):0.9;
+    let minWidth = compression_config_arr[1]?parseFloat(compression_config_arr[1]):600;
+    let ratio = compression_config_arr[2]?parseFloat(compression_config_arr[2]):0.9; // 属于压缩关键第二部分
+    // 如果逻辑回调返回false表示不进行压缩，则  originFile 就是压缩的对象，等于没压缩
+    // 或 如果不是文件跳过压缩
+    if(! isCompressionCallback() || ! isImageFile(originFile)  ) {
+        callback(originFile);
         return;
     }
-    // 如果不是文件跳过压缩
-    if(! isImageFile(imgFile) || imgFile == null ) {
-        callback(imgFile);
-        return;
-    } 
-    // 属于压缩关键第二部分
-    let ratio = 0.8;
-    let minWidth = 600;
+    console.log("进入压缩逻辑",widthWithHeightRatio,minWidth,ratio)
     // 开始准备获取图片原始大小（高度，宽度）
     let reader = new FileReader();
-    reader.readAsDataURL(imgFile);
+    reader.readAsDataURL(originFile);
     let img = new Image();
     reader.onload = e => {
         path = e.currentTarget.result
@@ -42,9 +39,10 @@ function ImgFileCompression(imgFile,isCompressionCallback ,callback) {
             const originHeight = img.height;
             const originWidth = img.width;
             // 计算出压缩后的宽度与高度，如果压缩后宽度小于600，使用原始图片宽高
-            let compressedWidth = originWidth*ratio >= 600?originWidth*ratio:originWidth;
-            let compressedHeight = originWidth*ratio >= 600?originHeight*ratio:originHeight;
-            
+            // console.log(originWidth*widthWithHeightRatio ,minWidth,originWidth*widthWithHeightRatio , minWidth,"压缩前大小：",originWidth,originHeight)
+            let compressedWidth = originWidth*widthWithHeightRatio >= minWidth?originWidth*widthWithHeightRatio:originWidth;
+            let compressedHeight = originWidth*widthWithHeightRatio >= minWidth?originHeight*widthWithHeightRatio:originHeight;
+            console.log("压缩后的大小",compressedWidth,compressedHeight);
             // 将图片绘制canvas中
             $("#canvas_box").html(`
                 <canvas id="myCanvas" width="${compressedWidth}" height="${compressedHeight}">
@@ -53,7 +51,7 @@ function ImgFileCompression(imgFile,isCompressionCallback ,callback) {
             var ctx=c.getContext("2d");
             ctx.drawImage(img,0,0,compressedWidth,compressedHeight);
             // 到这里已经将图片绘制了，但我们将之隐藏了，因为用于压缩 ，所以无需显示
-            canvasToImageFile("#myCanvas",imgFile,callback)
+            canvasToImageFile("#myCanvas",originFile,ratio,callback)
         }
     }
 

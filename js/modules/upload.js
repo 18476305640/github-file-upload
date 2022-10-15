@@ -74,7 +74,7 @@ let githubUpload = function (fileName, fileData,isImage = true) {
           $("#resource_box").html(`<img src="${dnsUrl}" />`)
         }else {
           $("#resource_box").html(`<p style="color:#2cb144;" class="resource_box" > <a href="${initUrl}" class="copyUrl" >文件原链<i class="fa fa-clone" aria-hidden="true"></i></a>&nbsp;&nbsp;&nbsp;<a href="${dnsUrl}" class="copyUrl">加速链接<i class="fa fa-clone" aria-hidden="true"></i></a></p>`)
-          $("#msg").html($("#msg").html() + `<span style="background:#fff000;" >( 默认复制加速链接，如果是一些特殊文件加速链接可能打不开，所以在这里给出了原链~ )<span>`)
+          $("#msg").html($("#msg").html() + `<span style="background:#9e9831;" >( 默认复制加速链接，如果是一些特殊文件加速链接可能打不开，所以在这里给出了原链~ )<span>`)
           // 给资源链接绑定copy功能
           bindCopy(".resource_box",".copyUrl","href","click");
         }
@@ -90,7 +90,7 @@ let githubUpload = function (fileName, fileData,isImage = true) {
         let dnsUrl = dns(initUrl)
         // 远程仓库已存在重名文件！
         $("#msg").html($("#msg").html() + `<p style="color:#2cb144;" class="resource_box" >远程仓库已存在重名文件！<a href="${initUrl}" class="copyUrl">原始链接<i class="fa fa-clone" aria-hidden="true"></i></a>&nbsp;&nbsp;&nbsp;<a href="${dnsUrl}" class="copyUrl" >加速链接<i class="fa fa-clone" aria-hidden="true"></i></a> <p>`)
-        $("#msg").html($("#msg").html() + `<span style="background:#fff000;" >( 默认复制加速链接，如果是一些特殊文件加速链接可能打不开，所以在这里给出了原链~ )<span>`)
+        $("#msg").html($("#msg").html() + `<span style="background:#9e9831;" >( 默认复制加速链接，如果是一些特殊文件加速链接可能打不开，所以在这里给出了原链~ )<span>`)
         // 给资源链接绑定copy功能
         bindCopy(".resource_box",".copyUrl","href","click");
         transitionChangeTitle("ed",1000);
@@ -118,9 +118,11 @@ let UploadFromFile = function (file,fileName = null) {
   if(!(file instanceof File) || file.size <= 0) return; // 下面需要确保是File类型
   var fr = new FileReader(); //FileReader方法： https://developer.mozilla.org/zh-CN/docs/Web/API/FileReader
   // 如果是图片进行压缩，如果不是不压缩 file == compressionFile
-  ImgFileCompression(file,()=>{
+  let compression_config = JSON.parse(localStorage.getItem("config")).compression_config;
+  ImgFileCompression(file, compression_config,()=>{
     return (JSON.parse(localStorage.getItem("config")).compression) == 1?true:false;
-  },(compressionFile)=>{
+  },
+  (compressionFile)=>{
       // 读取为base64格式的数据
       fr.readAsDataURL(compressionFile);
       fr.onload = function (e) {

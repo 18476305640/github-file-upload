@@ -49,6 +49,8 @@ $(function () {
     if(configObj.compression != null && configObj.compression == 1 ) {
       $("input[name='compression']").attr('checked',true)
     }
+    $("input[name='compression_config']").val(configObj.compression_config)
+    
   })()
   // 配置的保存
   let configButName = $("#config_control").html()
@@ -68,6 +70,7 @@ $(function () {
       configObj.path = $("input[name='path']").val()
       configObj.dns = $("input[name='dns']").val()
       configObj.compression = $("input[name='compression']").is(':checked')?1:0;
+      configObj.compression_config =  $("input[name='compression_config']").val();
       localStorage.setItem("config", JSON.stringify(configObj));
       $("#tis").html(tis_content);
     } else {

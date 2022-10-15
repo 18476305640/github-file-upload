@@ -86,9 +86,12 @@
               </td>
             </tr>
             <tr>
-              <td>图片压缩：</td>
-              <td id="compression_check_td">
-                <input type="checkbox" name="compression"  />
+              <td>图片压缩&nbsp;<a href="#" title="宽高压缩比例:宽度低于多少时不压缩宽高:质量" ><i class="fa fa-question-circle-o" aria-hidden="true"  ></i></a>：</td>
+              <td>
+                <div id="compression_check_td">
+                  <input type="checkbox" name="compression"  />
+                  <input type="text" name="compression_config" placeholder="默认：0.9:600:0.9" />
+                </div>
               </td>
             </tr>
           </table>
