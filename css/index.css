@@ -11,7 +11,7 @@
   display: none;
   
   background-color: #cccccc;
-  padding: 20px;
+  padding: 20px 5px;
   margin: 20px 0px;
   overflow: hidden;
 
@@ -131,7 +131,9 @@ table {
   align-items: center;
   overflow: hidden;
   
+  
 }
+
 #compression_check_td > input {
   border:none;
   border: none;
