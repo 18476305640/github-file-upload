@@ -40,7 +40,7 @@
         <i class="fa fa-cog" aria-hidden="true" style="font-size: 1em"></i
         >&nbsp;&nbsp;配置
       </button>
-      <span id="tis">本客户端支持任意文件格式上传到GitHub！</span>
+      <span id="tis">支持任意文件格式上传到GitHub！</span>
       <div id="config">
         <div>
           <table>
@@ -55,7 +55,7 @@
               </td>
             </tr>
             <tr>
-              <td>用户名/仓库名：</td>
+              <td>User/Repo：</td>
               <td id="userAndRepo_td">
                 <select name="userAndRepo">
                   <option value="">--需要检验token--</option>
@@ -86,10 +86,11 @@
               </td>
             </tr>
             <tr>
-              <td>图片压缩&nbsp;<a href="#" title="宽高压缩比例:宽度低于多少时不压缩宽高:质量" ><i class="fa fa-question-circle-o" aria-hidden="true"  ></i></a>：</td>
+              <td>图片压缩：</td>
               <td>
                 <div id="compression_check_td">
                   <input type="checkbox" name="compression"  />
+                  <a href="#" title="宽高压缩比例:宽度低于多少时不压缩宽高:质量" >&nbsp;<i class="fa fa-question-circle-o" aria-hidden="true" style="color:blue"></i>&nbsp;</a>
                   <input type="text" name="compression_config" placeholder="默认：0.9:600:0.9" />
                 </div>
               </td>
