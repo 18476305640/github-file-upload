@@ -174,6 +174,12 @@ $(function () {
 
 
   })
+  // 压缩的提示
+  let tis = "";
+  $("#compressionTis").attr("title",tis = "宽高压缩比例 : 宽度低于多少时不压缩宽高 : 质量").click(function(e) {
+    alert(tis);
+    e.preventDefault();
+  });
 
 
 
