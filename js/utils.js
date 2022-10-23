@@ -2,7 +2,7 @@ function urlFormat(url, format = "md", describe = new Date().Format('yyyy-MM-dd'
 
   switch (format) {
     case "md":
-      return `![${describe}](${url})`
+      return `![](${url})`
       break
     default:
       return url
