@@ -26,3 +26,18 @@ function bindCopy(parent, target, targetAttr, even) {
   })
 
 }
+// 将字符串转为文本对象
+function StringToTextFile(text,fileName) {
+  var reader = new FileReader();
+  let file = new File([text],fileName ,{
+      type: 'text/plain'
+  });
+  return file;
+}
+// 读取文本文件
+function readTextFile(file, readFun) {
+  reader.readAsText(file, 'utf-8');
+  reader.onload = function(){
+    readFun(reader.result)
+  };
+}

@@ -54,6 +54,7 @@ let githubUpload = function (fileName, fileData,isImage = true) {
       content: fileData
     }),
     success (data) {
+      console.log("上传成功的原始数据 ：",data)
       // 对原始链接进行nds加速
       let initUrl = data.content.download_url
       let dnsUrl = dns(initUrl)
@@ -107,7 +108,7 @@ let githubUpload = function (fileName, fileData,isImage = true) {
 
 // 公共工具类
 let UploadFromFile = function (file,fileName = null) {
-  console.log(file);
+  console.log("file->",file);
   // 如果是DataTransferItem 就转为File
 
   if( file.kind == 'file' && file instanceof DataTransferItem ) {
