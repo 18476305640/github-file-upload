@@ -169,3 +169,6 @@ table {
   width: 15.75em;
   max-width: 100%;
 }
+body::-webkit-scrollbar {
+  display: none;
+}
