@@ -88,7 +88,7 @@ td > input {
   border: none;
   padding: 5px;
   background-color: #fff;
-  
+  border-radius: 0px !important;  
 }
 select {
   display: block;
@@ -143,6 +143,7 @@ table {
 #compression_check_td > input {
   border: none;
   padding: 5px 0px;
+  border-radius: 0px;
 
 }
 #modification_1,#modification_2 {
@@ -157,11 +158,16 @@ table {
   height: 18px;
   top: 4px;
   margin: 0px 4px;
+  display: block;
 }
 #modification_2 {
   left: 20px;
   top: 0px;
   line-height: 25px;  
+  display: block;
+  margin: 0px 4px;
+  text-align: center;
+  
 }
 #modification_3 {
   padding-left: 45px;

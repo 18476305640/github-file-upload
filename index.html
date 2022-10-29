@@ -1,131 +1,125 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Github图床-zhuangjie</title>
-    <!--设置ico图标-->
-    <link rel="stylesheet" href="fontawesome/css/font-awesome.css" />
-    <link rel="shortcut icon" href="favicon.ico" />
-    <link rel="stylesheet" type="text/css" href="css/index.css" />
-    <link rel="stylesheet" type="text/css" href="css/media.css" />
 
-    
-    <script src="js/jquery.js"></script>
-    <!--引入主题-开始-->
-    <link rel="stylesheet" type="text/css" href="theme/background.css" />
-    <script src="theme/index.js" type="module"></script>
-    
-    <script src="js/date-format.js"></script>
-    <script src="js/utils.js"></script>
-    <script src="js/modules/pc_mobile.js"></script>
-    <script src="js/compression.js"></script>
-    
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Github图床-zhuangjie</title>
+  <!--设置ico图标-->
+  <link rel="stylesheet" href="fontawesome/css/font-awesome.css" />
+  <link rel="shortcut icon" href="favicon.ico" />
+  <link rel="stylesheet" type="text/css" href="css/index.css" />
+  <link rel="stylesheet" type="text/css" href="css/media.css" />
 
-    <script type="module">
-      // 导入配置
-      import configObj from "./js/modules/config.js";
-      // 导入触发条件
-      import "./js/modules/triggers.js";
-      // 导入动作
-      import "./js/modules/index.js";
-      
-    </script>
-  </head>
 
-  <body >
-    <div id="config_box">
-      <button id="config_control">
-        <i class="fa fa-cog" aria-hidden="true" style="font-size: 1em"></i
-        >&nbsp;&nbsp;配置
-      </button>
-      <span id="tis">支持任意文件格式上传到GitHub！</span>
-      <div id="config">
-        <div>
-          <table>
-            <tr>
-              <td>token：</td>
-              <td>
-                <input
-                  type="text"
-                  name="token"
-                  placeholder=">>失去焦点自动检验<<"
-                />
-              </td>
-            </tr>
-            <tr>
-              <td>User/Repo：</td>
-              <td id="userAndRepo_td">
-                <select name="userAndRepo">
-                  <option value="">--需要检验token--</option>
-                </select>
-                <!-- <input type="text" name="userAndRepo" placeholder="检验超时，请手动输入，比如：“zhuangjie/img-repo”"> -->
-              </td>
-            </tr>
-            <tr>
-              <td>存放分支：</td>
-              <td>
-                <input type="text" name="branch" placeholder="比如：master" />
-              </td>
-            </tr>
-            <tr>
-              <td>存放路径：</td>
-              <td>
-                <input type="text" name="path" placeholder="比如：“/images”" />
-              </td>
-            </tr>
-            <tr>
-              <td>加速链接：</td>
-              <td>
-                <input
-                  type="text"
-                  name="dns"
-                  placeholder="默认：https://cdn.jsdelivr.net/gh"
-                />
-              </td>
-            </tr>
-            <tr>
-              <td>图片压缩：</td>
-              <td id="modification_parent">
-                  <input type="checkbox" name="compression" id="modification_1" />
-                  <a href="#"  id="modification_2" class="compressionTis" >&nbsp;<i class="fa fa-question-circle-o" aria-hidden="true" style="color:blue"></i>&nbsp;</a>
-                  <input type="text" name="compression_config" placeholder="默认：0.9:600:0.9" id="modification_3" />
-              </td>
-            </tr>
-          </table>
-          <div id="illustrate">
-            <h4><i class="fa fa-bug" aria-hidden="true"></i> BUG征集</h4>
-            <p>有bug，请联系我 2119299531@qq.com</p>
-            <h4>
-              <i class="fa fa-smile-o" aria-hidden="true"></i> v2.X 凡人修仙版
-              新增功能
-            </h4>
-            <p>v2.1 token检验，让输入配置更便捷。</p>
-            <p>v2.2 加入图片压缩功能</p>
-          </div>
+  <script src="js/jquery.js"></script>
+  <!--引入主题-开始-->
+  <link rel="stylesheet" type="text/css" href="theme/background.css" />
+  <script src="theme/index.js" type="module"></script>
+
+  <script src="js/date-format.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/modules/pc_mobile.js"></script>
+  <script src="js/compression.js"></script>
+
+
+  <script type="module">
+    // 导入配置
+    import configObj from "./js/modules/config.js";
+    // 导入触发条件
+    import "./js/modules/triggers.js";
+    // 导入动作
+    import "./js/modules/index.js";
+
+  </script>
+</head>
+
+<body>
+  <div id="config_box">
+    <button id="config_control">
+      <i class="fa fa-cog" aria-hidden="true" style="font-size: 1em"></i>&nbsp;&nbsp;配置
+    </button>
+    <span id="tis">支持任意文件格式上传到GitHub！</span>
+    <div id="config">
+      <div>
+        <table>
+          <tr>
+            <td>token：</td>
+            <td>
+              <input type="text" name="token" placeholder=">>失去焦点自动检验<<" />
+            </td>
+          </tr>
+          <tr>
+            <td>User/Repo：</td>
+            <td id="userAndRepo_td">
+              <select name="userAndRepo">
+                <option value="">--需要检验token--</option>
+              </select>
+              <!-- <input type="text" name="userAndRepo" placeholder="检验超时，请手动输入，比如：“zhuangjie/img-repo”"> -->
+            </td>
+          </tr>
+          <tr>
+            <td>存放分支：</td>
+            <td>
+              <input type="text" name="branch" placeholder="比如：master" />
+            </td>
+          </tr>
+          <tr>
+            <td>存放路径：</td>
+            <td>
+              <input type="text" name="path" placeholder="比如：“/images”" />
+            </td>
+          </tr>
+          <tr>
+            <td>加速链接：</td>
+            <td>
+              <input type="text" name="dns" placeholder="默认：https://cdn.jsdelivr.net/gh" />
+            </td>
+          </tr>
+          <tr>
+            <td>图片压缩：</td>
+            <td id="modification_parent">
+              <input type="checkbox" name="compression" id="modification_1" />
+              <a href="#" id="modification_2" class="compressionTis">
+                <i class="fa fa-question-circle-o" aria-hidden="true" style="color:blue"></i>
+              </a>
+              <input type="text" name="compression_config" placeholder="默认：0.9:600:0.9" id="modification_3" />
+            </td>
+          </tr>
+        </table>
+        <div id="illustrate">
+          <h4><i class="fa fa-bug" aria-hidden="true"></i> BUG征集</h4>
+          <p>有bug，请联系我 2119299531@qq.com</p>
+          <h4>
+            <i class="fa fa-smile-o" aria-hidden="true"></i> v2.X 凡人修仙版
+            新增功能
+          </h4>
+          <p>v2.1 token检验，让输入配置更便捷。</p>
+          <p>v2.2 加入图片压缩功能</p>
         </div>
       </div>
     </div>
+  </div>
 
-    <div id="choose_img">
-      <input type="file" name="content" id="myFile" style="display: none" />
-      <img src="" id="img_pre_show" />
-      <div id="canvas_box" style="display:none"></div>
-      <div id="upload_hint">
-        <i class="fa fa-cloud-upload" aria-hidden="true"></i>
-        <br />
-        <p>点击选择<b>或者</b>拖拽到这里<b>或者</b>在此页面粘贴</p>
-      </div>
+  <div id="choose_img">
+    <input type="file" name="content" id="myFile" style="display: none" />
+    <img src="" id="img_pre_show" />
+    <div id="canvas_box" style="display:none"></div>
+    <div id="upload_hint">
+      <i class="fa fa-cloud-upload" aria-hidden="true"></i>
+      <br />
+      <p>点击选择<b>或者</b>拖拽到这里<b>或者</b>在此页面粘贴</p>
     </div>
+  </div>
 
-    <br />
-    <div id="msg">
-      <p id="tis2">请在此页面粘贴！ ☆⌒(*＾-゜)v THX!!</p>
-    </div>
-    <div id="resource_box" class="resource_box"></div>
+  <br />
+  <div id="msg">
+    <p id="tis2">请在此页面粘贴！ ☆⌒(*＾-゜)v THX!!</p>
+  </div>
+  <div id="resource_box" class="resource_box"></div>
 
-  </body>
-  
+</body>
+
 
 </html>
