@@ -154,20 +154,21 @@ table {
 
 }
 #modification_1 {
+  position: absolute;
   width: 18px;
   height: 18px;
   top: 4px;
-  margin: 0px 4px;
+  left: 4px;
   display: block;
 }
 #modification_2 {
-  left: 20px;
+  position: absolute;
+  display: block;
+  left: 26px;
   top: 0px;
   line-height: 25px;  
-  display: block;
-  margin: 0px 4px;
-  text-align: center;
-  
+  font-size: 15px;
+  width: 19px;
 }
 #modification_3 {
   padding-left: 45px;
