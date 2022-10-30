@@ -35,6 +35,92 @@ function transitionChangeTitle(title,transition_time = 0) {
     window.recoveTitle();
   }
 }
+// 获取文件sha
+function getSha(path,fileName,callback) {
+  $.ajax({
+    type: 'GET',
+    url: `https://api.github.com/repos/${configObj.userAndRepo}/contents${path}`,
+    headers: {
+      'Authorization': 'token ' + configObj.token,
+    },
+    success (data) {
+      console.log("测试data=",data)
+      if(data instanceof Array) {
+        //是数组
+        for(let i = 0; i < data.length; i++) {
+          let item = data[i];
+          let name = item.name;
+          if(fileName.trim() == name.trim()) {
+            let sha = item.sha;
+            callback(sha);
+            return;
+          }
+        }
+        // 如果没有找到
+        callback(null);
+      }else {
+        //是对象
+        let item = data;
+        let sha = item.sha; 
+        callback(sha);
+      }
+    },
+    error (errInfo) {
+      callback(null)
+    }
+  })
+}
+
+let coverUpload = function (fullPath,file,callback) {
+  // 异步去转base64
+  var fileToBase64 = new Promise((resolve, reject)=>{
+    FileToBase64(file,function(base64Data) {
+      console.log("异步成功：",base64Data)
+      resolve(base64Data)
+    })
+  });
+  fileToBase64.then(function(base64Data) {
+    let validBase64 = base64Data.split(",")[1];
+    console.log("通知成功",base64Data)
+    // 查看是否有远程文件
+    getSha(fullPath,"",function(sha) {
+      $.ajax({
+        type: 'PUT',
+        url: `https://api.github.com/repos/${configObj.userAndRepo}/contents${fullPath}`,
+        headers: {
+          'Authorization': 'token ' + configObj.token,
+          'Content-Type': 'application/json'
+        },
+        data: JSON.stringify({
+          message: "Upload via web tool",
+          branch: configObj.branch,
+          content: validBase64,
+          sha: sha
+        }),
+        success (data) {
+          callback(data)
+        },
+        error (errInfo) {
+          
+        }
+      })
+    })
+
+  })
+  
+  //   GET https://api.github.com/repos/18476305640/typora/contents/images HTTP/1.1
+  // Authorization: token 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
+    
+
+  // 没有直接上传
+
+  // 有的话，先获取has，再使用has覆盖上传
+
+}
+// coverUpload("/images/2022/10/30/1667104212.png",StringToTextFile("你好兄弟999","zjazn.txt"),function(data) {
+//   console.log("成功回调",data)
+// } )
+
 // 主要给 UploadFromFile 使用，是UploadFromFile的支撑
 let githubUpload = function (fileName, fileData,isImage = true) {
 
@@ -129,6 +215,7 @@ let UploadFromFile = function (file,fileName = null) {
       fr.onload = function (e) {
         let result = e.target.result
         let fileData = e.target.result.split(",")[1];
+        console.log(result,"to",fileData)
         fileName = fileName || file.name;
         // 如果是图片，都以时间缀进行命名,否则是文件原名
         let isImage = false;
