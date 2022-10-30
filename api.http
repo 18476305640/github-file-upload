@@ -3,8 +3,8 @@ Authorization: token github_pat_11APH4YIY0VCXj02ZvJxfF_U6Db5fK7ZvdSarWqZrzHWYVmA
 
 
 ###
-PUT https://api.github.com/repos/18476305640/typora/contents/images/2022/10/28/16669478404162.png HTTP/1.1
+PUT https://api.github.com/repos/18476305640/typora/contents/images/2022/10/28/166694784042162.png HTTP/1.1
 Authorization: token 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
 Content-Type: application/json
 
-{"message":"Upload pictures via github-image-uploader","sha": "9f4cda923fd7403e248657e0c99b6d4cf47207b7","branch":"master","content":"data:text/plain;base64,5L2g5aW95YWE5byf"}
+{"message":"Upload pictures via github-image-uploader","sha": "9f4cda923fd7403e248657e0c99b6d4cf47207b7","branch":"master","content":"Y3JlYXRlIGZpbGUgZnJvbSBJTlNPTU5JQQoKSXQncyB1cGRhdGVkISEhCgpJdCdzIHVwZGF0ZWQgYWdhaW4hIQ=="}
