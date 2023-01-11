@@ -3,6 +3,8 @@ import configObj from './config.js'
 import '../jquery.js'
 import '../utils.js'
 import '../compression.js'
+// 引入 "帧应用"
+import './apps/frameApp/index.js'
 
 window.PlaceToSelect = function (current_repos = window.tmp_userAndRepo) {
   if (!current_repos) current_repos = JSON.parse(localStorage.getItem("userAndRepo"));
