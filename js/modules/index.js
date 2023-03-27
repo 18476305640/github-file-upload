@@ -118,32 +118,15 @@ $(function () {
       // 根据token获取用户名，也可以获取仓库，但有的好像没有
       $.ajax({
         type: 'get',
-        url: "https://api.github.com/user/repos", //https://api.github.com/users/18476305640/repos
+        url: "https://api.github.com/user/repos?per_page=1000&page=1", //https://api.github.com/users/18476305640/repos
         headers: {
           'Authorization': 'token ' + token,
           'Accept': 'application/vnd.github+json'
         },
         success(data) {
-          resolve(data[0].owner.login);
+          resolve(data);
         }
       });
-    }).then(username => {
-      // 根据用户名获取公开的仓库
-      return new Promise((resolve, reject) => {
-        $.ajax({
-          type: 'get',
-          url: `https://api.github.com/users/${username}/repos`,
-          // 这里不加头也可以，但会有请求数限制（根据ip）
-          headers: {
-            'Authorization': 'token ' + token,
-            'Accept': 'application/vnd.github+json'
-          },
-          success(data) {
-            // 公开的仓库
-            resolve(data);
-          }
-        });
-      })
     }).then(allRepos => {
       // 全部的仓库
       let current_repos = [];
