@@ -8,3 +8,40 @@ Authorization: token github_pat_11APH4YIY0VCXj02ZvJxfF_U6Db5fK7ZvdSarWqZrzHWYVmA
 Content-Type: application/json
 
 {"message":"Upload pictures via github-image-uploader","sha": "9f4cda923fd7403e248657e0c99b6d4cf47207b7","branch":"master","content":"Y3JlYXRlIGZpbGUgZnJvbSBJTlNPTU5JQQoKSXQncyB1cGRhdGVkISEhCgpJdCdzIHVwZGF0ZWQgYWdhaW4hIQ=="}
+
+
+
+###
+POST https://api.wolai.com/v1/exportMarkdown HTTP/1.1
+Accept: application/json, text/plain, */*
+Accept-Encoding: gzip, deflate, br
+Accept-Language: zh-CN,zh;q=0.9,en;q=0.8
+Connection: keep-alive
+Content-Length: 137
+Content-Type: application/json
+Cookie: wolai_client_id=e3pUijKEjoX7vaGUogUCTW; cna=pUWnHPOzE1oCAdOL/n5vE3pA; _gid=GA1.2.1369719006.1679841195; token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJxUEJ5bUxYaGJTaXZwdkxRdE1wTHdNIiwiaWF0IjoxNjc5ODQxMjAwLCJleHAiOjE5OTUyMDEyMDB9.1f2NrhzQcxYpXLeHlLCA_1UAdZRnG-37u2ZmRmtS0Qc; xlly_s=1; _ga=GA1.2.470980442.1679841193; _ga_FET8ST1LB6=GS1.1.1680015496.13.1.1680017223.0.0.0; isg=BBQVyAvxDOQt0pgrCUHB9H5C5VKGbThXI4CPva7Gux5OmTfj93xg5l3fmZEBZnCv
+Host: api.wolai.com
+Origin: https://www.wolai.com
+sec-ch-ua: "Google Chrome";v="111", "Not(A:Brand";v="8", "Chromium";v="111"
+sec-ch-ua-mobile: ?0
+sec-ch-ua-platform: "Windows"
+Sec-Fetch-Dest: empty
+Sec-Fetch-Mode: cors
+Sec-Fetch-Site: same-site
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36
+wolai-app-version: 1.1.1-21
+wolai-client-platform: web
+wolai-client-version
+wolai-os-platform: win
+x-client-timeoffset: -480
+x-client-timezone: Asia/Shanghai
+
+{
+    "pageId": "8TThXJwvtWCpRV7UofYyZX",
+    "pageTitle": "程序员的自身修养",
+    "options": {
+        "recoverTree": true,
+        "generateToc": "none",
+        "includeSubPage": true
+    }
+}
