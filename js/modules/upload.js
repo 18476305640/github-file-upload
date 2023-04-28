@@ -74,11 +74,17 @@ let githubUpload = function (fileName, fileData, isImage = true) {
       // 将内容写到剪切板
       let finallyUrl = dnsUrl;
 
-      if (isImage) {
-        // 如果是图片用md图片格式进行包装
-        // console.log(">>> 正在上传的是图片");
-        finallyUrl = urlFormat(dnsUrl, "md")
+      if (! isImage) {
+        $("#resource_box").html(`<p style="color:#2cb144;" class="resource_box" > <a href="${initUrl}" class="copyUrl" >文件原链<i class="fa fa-clone" aria-hidden="true"></i></a>&nbsp;&nbsp;&nbsp;<a href="${dnsUrl}" class="copyUrl">加速链接<i class="fa fa-clone" aria-hidden="true"></i></a></p>`)
+        $("#msg").html($("#msg").html() + `<span style="background:#9e9831;" >( 默认复制加速链接，如果是一些特殊文件加速链接可能打不开，所以在这里给出了原链~ )<span>`)
+        // 给资源链接绑定copy功能
+        bindCopy(".resource_box", ".copyUrl", "href", "click");
+        transitionChangeTitle("success", 1000);
+        return;
       }
+      // 如果不是文件，那就是图片用md图片格式进行包装
+      // console.log(">>> 正在上传的是图片");
+      finallyUrl = urlFormat(dnsUrl, "md")
       navigator.clipboard.writeText(finallyUrl).then(function () {
         console.log('OK，Template copied to clipboard！')
         $("#msg").html($("#msg").html() + "<p id='uploadSuccessTis'>② 上传成功了，请查看剪切板！ヾ(^▽^*)))</p>")
@@ -89,18 +95,14 @@ let githubUpload = function (fileName, fileData, isImage = true) {
           initUrl,
           cdnURL: dns(initUrl)
         })
-        
-        if (isImage) {
-          $("#resource_box").html(`<img src="${dnsUrl}" />`)
-        } else {
-          $("#resource_box").html(`<p style="color:#2cb144;" class="resource_box" > <a href="${initUrl}" class="copyUrl" >文件原链<i class="fa fa-clone" aria-hidden="true"></i></a>&nbsp;&nbsp;&nbsp;<a href="${dnsUrl}" class="copyUrl">加速链接<i class="fa fa-clone" aria-hidden="true"></i></a></p>`)
-          $("#msg").html($("#msg").html() + `<span style="background:#9e9831;" >( 默认复制加速链接，如果是一些特殊文件加速链接可能打不开，所以在这里给出了原链~ )<span>`)
-          // 给资源链接绑定copy功能
-          bindCopy(".resource_box", ".copyUrl", "href", "click");
-        }
+        // 图片回显
+        $("#resource_box").html(`<img src="${dnsUrl}" />`)
       }, function () {
-        $("#msg").html("<span style='color:red'>Error,Unable to write to clipboard. :-(</span>")
-        transitionChangeTitle("No way!", 1);
+        $("#msg").html("<span style='color:red'>Writing to the clipboard failed because you are not on this page :-( </span>")
+        $("#resource_box").html(`<p style="color:#2cb144;" class="resource_box" > <a href="${finallyUrl}" class="copyUrl" >手动复制（MD图片）<i class="fa fa-clone" aria-hidden="true"></i></a></p>`)
+        // 给资源链接绑定copy功能
+        bindCopy(".resource_box", ".copyUrl", "href", "click");
+        transitionChangeTitle("No way!", 500);
       });
 
     },

@@ -15,7 +15,7 @@ function bindCopy(parent, target, targetAttr, even) {
   $(parent).on(even, target, function (e) {
     // 阻止默认事件
     e.preventDefault();
-    event.stopPropagation();
+    e.stopPropagation();
     // 将链接复制到剪切板
     let fileInitUrl = $(e.target).attr(targetAttr)
     navigator.clipboard.writeText(fileInitUrl).then(()=> {
