@@ -113,10 +113,10 @@ function fileDataProcessing(file) {
 }
 // 图片文件生成以时间缀为文件名，原后缀为后缀的fullFileName
 function genTimestampImgFileName(originalFileName) {
-    let suffix = originalFileName.split(".")[1];
+    if(originalFileName == null) return originalFileName;
+    let suffix = originalFileName.substring(originalFileName.lastIndexOf(".")+1);
     return new Date().getTime() + "." + suffix
 }
-
 
 // cdn加速
 function cdn(url) {
