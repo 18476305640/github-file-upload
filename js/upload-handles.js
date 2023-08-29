@@ -90,6 +90,8 @@ let viewMap = {
       })
       if(preShowURL == null) {
         $("#upload_hint").show();
+        // 同时清空选择的文件
+        $("#myFile").val(null);
       }else {
         $("#upload_hint").hide();
       }
