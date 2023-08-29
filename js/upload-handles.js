@@ -89,9 +89,9 @@ let viewMap = {
         "display":preShowURL==null?"none":"block"
       })
       if(preShowURL == null) {
-        $("#upload_hint").show()
+        $("#upload_hint").show();
       }else {
-        $("#upload_hint").hide()
+        $("#upload_hint").hide();
       }
     }
 }
