@@ -1,62 +1,71 @@
 // 引入要使用的函数
-import { githubUpload,UploadFromFile } from './upload.js'
+import { UploadFromFile } from './upload.js'
+import {viewMap} from '../upload-handles.js'
 // 引入 jquery 
 import '../jquery.js'
 
 
-
-
-
-
-// 【第一种】触发方式： 点击选择“上传”
-$('#myFile').on('input', (e) => {
-  // 清除上次文件的挂载！！
-  window.currentChooseFiles = null;
-  // 将文件对象挂载到window对象上！！
-  window.currentChooseFiles = $('#myFile')[0].files;
-  if (window.currentChooseFiles[0].type.indexOf("image") == 0) {
-    // 上传的是图片
-    var windowURL = window.URL || window.webkitURL;
-    var dataURL = windowURL.createObjectURL($('#myFile')[0].files[0]);
-    $('#img_pre_show').attr('src', dataURL)
-    $('#img_pre_show').attr('isImg', "1")
-
-  } else {
-    $('#img_pre_show').attr('src', "img/file.svg")
-    $('#img_pre_show').attr('isImg', "0")
+// 从事件对象中获取目标
+function targetFromEvent(e) {
+  if(e == null) return null;
+  e = e || window.event; // 为 IE8 及更早的浏览器提供兼容性
+  return e.target || e.srcElement; // 优先使用 e.target，如果不存在，会使用 e.srcElement
+}
+// 文件挂载-上传统一处理器
+let resourceOperator = {
+  resource: null,
+  show (file,isNowUpload = false,getPreUrl) {
+    if(file == null || Array. isArray(file)) return;
+    // 数据挂载
+    this.resource = file;
+    let isImg = file.type.startsWith("image");
+    // 传入的自定义getPreUrl只有是图片的时候才起作用，否则也是用默认的获取preUrl函数
+    if( getPreUrl == null || (getPreUrl != null && ! isImg) ) getPreUrl = function (resolve,reject) {
+      let preShowURL = "img/file.svg";
+      if(isImg) {
+        let windowURL = window.URL || window.webkitURL;
+        preShowURL = windowURL.createObjectURL(file);
+      }
+      resolve(preShowURL);
+    }
+    new Promise(getPreUrl ).then(preShowURL=>{
+      viewMap.sensingArea(preShowURL)
+    })
+    // 看是否要立即上传
+    if(isNowUpload) this.upload();
+  },
+  upload() {
+    if(this.resource == null) return;
+    UploadFromFile(this.resource)
   }
-  
-  // 让图片显示
-  $('#img_pre_show').css({
-    "display":"block"
-  })
-  // 给资源绑定可点击复制的功能
-  bindCopy(".resource_box", ".copyUrl", "href", "click");
-
-  $("#upload_hint").hide()
-})
+}
+// 【选择上传】
+$('#myFile').on('input', (e) => resourceOperator.show( targetFromEvent(e).files[0] ))
 // 点击图片进行上传时触发
-$("#img_pre_show").click(function () {
-  let files = window.currentChooseFiles;
-  if(files == null || files.length == 0) return;
-  
-  for(let i = 0; i < files.length; i++) {
-    let file = files[i];
-    console.log(file)
-    UploadFromFile(file);
-  }
+$("#img_pre_show").on('click', ()=> resourceOperator.upload())
 
-})
-// 【第二种】粘贴动作方式
+// 【粘贴上传】
 document.addEventListener('paste', function (e) {
-  var files = e.clipboardData.items;
-  for (var i = 0; i < files.length; i++) {
-    var file = files[i];
-    UploadFromFile(file);
-  }
+  const clipboardData = (e.clipboardData || window.clipboardData);
+  const items = clipboardData.items || clipboardData.files || [];
+  // 取出第一个项目
+  const firstItem = items[0];
+  // 如果粘贴的是字符串，忽略
+  if(firstItem == null || firstItem.kind == "string" ) return;
+  resourceOperator.show(items[0],true,(resolve,reject)=>{
+    // 将剪贴板项作为Blob提取出来
+    const imageFile = firstItem.getAsFile ? firstItem.getAsFile() : firstItem;
+    // 使用 FileReader 读取图片文件并显示到页面上
+    const reader = new FileReader();
+    reader.onload = function (event) {
+      resolve(event.target.result);
+    };
+    reader.readAsDataURL(imageFile);
+  });
+
 });
 
-// 【第三种】拖拽方式
+// 【拖拽上传】
 $("#choose_img")[0].addEventListener("dragover", function (e) {
   e.preventDefault();
   e.stopPropagation();
@@ -69,24 +78,20 @@ $("#choose_img")[0].addEventListener("drop", function (e) {
   if (df.items !== undefined) {
     // Chrome拖拽文件逻辑
     let files = df.files
-    for (var i = 0; i < files.length; i++) {
-      var file = files[i];
-      console.log("=>",file)
-      UploadFromFile(file);
-    }
+    resourceOperator.show(df.files[0],true)
   }
 }, false)
 
-// 【第四种-开发中】触发: 粘贴资源URL动作
-document.addEventListener('paste', function (e) {
-  var files = e.clipboardData.items;
-  for (var i = 0; i < files.length; i++) {
-    var file = files[i];
-    if(file.kind != "string") continue;
-    file.getAsString(function (sourceUrl){
-      if(sourceUrl.indexOf("http") != 0) return;
-      console.log("*** 是http链接")
-      alert("暂不支持图片链接上传~")
-    });
-  }
-});
+// // 【第四种-开发中】触发: 粘贴资源URL动作
+// document.addEventListener('paste', function (e) {
+//   var files = e.clipboardData.items;
+//   for (var i = 0; i < files.length; i++) {
+//     var file = files[i];
+//     if(file.kind != "string") continue;
+//     file.getAsString(function (sourceUrl){
+//       if(sourceUrl.indexOf("http") != 0) return;
+//       console.log("*** 是http链接")
+//       alert("暂不支持图片链接上传~")
+//     });
+//   }
+// });

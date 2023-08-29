@@ -1,5 +1,4 @@
 function urlFormat(url, format = "md", describe = new Date().Format('yyyy-MM-dd')) {
-
   switch (format) {
     case "md":
       return `![](${url})`
@@ -52,14 +51,36 @@ function Base64ToBlob(base64) {
   console.log(new Blob([u8arr], { type: mime }))
   return new Blob([u8arr], { type: mime })
 }
-function FileToBase64(file,callback) {
-  var reader = new FileReader();
-  // 传入一个参数对象即可得到基于该参数对象的文本内容
-  reader.readAsDataURL(file);
-  reader.onload = function (e) {
-    // target.result 该属性表示目标对象的DataURL
-    callback(e.target.result);
-  };
+//FileReader方法： https://developer.mozilla.org/zh-CN/docs/Web/API/FileReader
+function FileToBase64(file) {
+  return new Promise((resolve,reject)=>{
+    let reader = new FileReader();
+    // 传入一个参数对象即可得到基于该参数对象的文本内容
+    reader.readAsDataURL(file);
+    reader.onload = function (e) {
+      // target.result 该属性表示目标对象的DataURL
+      resolve(e.target.result);
+    };
+  })
+  
 }
 
 
+// 过渡式更改标题的函数
+let recoveTitle = (function recoverTitle() {
+  let originalTitle = document.title;
+  return function (transitionTime = 0) {
+    setTimeout(function () {
+      document.title = originalTitle;
+    }, transitionTime)
+  }
+})();
+// 如果transitionTime为空，则不恢复原来的标题
+function transitionChangeTitle(title, transitionTime) {
+  document.title = title;
+  // 如果没有设置恢复时间，就不恢复
+  if (title == null || transitionTime != null) {
+    recoveTitle(transitionTime)
+  }
+}
+export {transitionChangeTitle,FileToBase64,bindCopy,urlFormat}
