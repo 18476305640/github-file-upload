@@ -14,13 +14,14 @@ function bindCopy(parent, target, targetAttr, even) {
   $(parent).on(even, target, function (e) {
     // 阻止默认事件
     e.preventDefault();
-    e.stopPropagation();
     // 将链接复制到剪切板
     let fileInitUrl = $(e.target).attr(targetAttr)
+    // 防止点击到i标签，如果点到i标签应向上找a标签
+    let aElement = $(e.target).closest('a'); 
     navigator.clipboard.writeText(fileInitUrl).then(()=> {
-      $(e.target).text("复制成功！\(￣︶￣*\))") //  $(e.target) 表示是点击的对象
+      if(aElement != null) aElement.text("复制成功！\(￣︶￣*\))")
     }, ()=> {
-      $(e.target).text("复制失败了 (;´༎ຶД༎ຶ`)")  //  $(e.target) 表示是点击的对象
+      if(aElement != null) aElement.text("复制失败了 (;´༎ຶД༎ຶ`)")
     });
   })
 
