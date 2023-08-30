@@ -15,9 +15,10 @@ function bindCopy(parent, target, targetAttr, even) {
     // 阻止默认事件
     e.preventDefault();
     // 将链接复制到剪切板
-    let fileInitUrl = $(e.target).attr(targetAttr)
+    
     // 防止点击到i标签，如果点到i标签应向上找a标签
     let aElement = $(e.target).closest('a'); 
+    let fileInitUrl = aElement.attr(targetAttr)
     navigator.clipboard.writeText(fileInitUrl).then(()=> {
       if(aElement != null) aElement.text("复制成功！\(￣︶￣*\))")
     }, ()=> {
