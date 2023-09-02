@@ -71,17 +71,21 @@ function FileToBase64(file) {
 // 过渡式更改标题的函数
 let recoveTitle = (function recoverTitle() {
   let originalTitle = document.title;
-  return function (transitionTime = 0) {
+  return function (transitionTime) {
+    if(transitionTime == null) {
+      document.title = originalTitle;
+      return;
+    }
     setTimeout(function () {
       document.title = originalTitle;
     }, transitionTime)
   }
 })();
 // 如果transitionTime为空，则不恢复原来的标题
-function transitionChangeTitle(title, transitionTime) {
+function transitionChangeTitle(title = "", transitionTime) {
   document.title = title;
   // 如果没有设置恢复时间，就不恢复
-  if (title == null || transitionTime != null) {
+  if (title.length == 0 || transitionTime != null) {
     recoveTitle(transitionTime)
   }
 }

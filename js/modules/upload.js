@@ -29,7 +29,8 @@ let UploadFromFile = async function (file) {
   if (file == null) return;
   transitionChangeTitle("base64...");
   let base64Data = await FileToBase64(file);
-  transitionChangeTitle();
+  // 还原标题
+  transitionChangeTitle(); 
   uploadToGithub(base64Data, file.name);
 
 }
