@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .paste {
+	margin: 0 auto;
+	max-width: 320px;
+}
+select {
+	width: 80px;
+	height: 30px;
+}
+input {
+	width: 225px;
+	height: 25px;
+}
+#view {
+	padding: 10px;
+	border: 2px dotted pink;
+}
+
+    </style>
+</head>
+<body>
+    <div class="paste">
+        <select name="type" id="type">
+            <option value="text">文本</option>
+            <option value="richText">富文本</option>
+            <option value="img">图片</option>
+        </select>
+        <input id="content" type="text" placeholder="请输入粘贴内容">
+        <p>您粘贴的内容是： </p>
+        <p id="view"></p>
+        <div>
+            测试内容：<a href="https://www.baidu.com/">https://www.baidu.com/</a>
+        </div>
+    </div>
+    
+    <script>
+        let type = document.querySelector('#type');
+let content = document.querySelector('#content');
+let view = document.querySelector('#view');
+showClip(type.value, content, view);
+
+type.addEventListener('change', function (e) {  
+	let currentType = e.target.value;
+	content.value = '';
+	view.innerText = '';
+	showClip(currentType, content, view);
+})
+
+function showClip (type, content, view) {
+	content.addEventListener('paste', function (event) {  
+		let clipboardData = event.clipboardData || event.originEvent.clipboardData;
+		let items = clipboardData.items;
+        debugger
+		if (type == 'text') {
+			if (items.length > 0 && items[0].kind == 'string') {
+				items[0].getAsString(function (e) {  
+					view.innerText = e;
+				})
+			}
+		}
+		if (type == 'richText') {
+			if (items.length > 0 && items[1].kind == 'string') {
+				items[1].getAsString(function (e) {  
+					view.innerHTML = e;
+				})
+			}
+		}
+		if (type == 'img') {
+			if (items.length > 0 && items[0].kind == 'file') {
+				let blob = items[0].getAsFile();
+				let reader = new FileReader();
+				reader.readAsDataURL(blob);
+				reader.onload = function (e) {  
+					let img = document.createElement('img');
+					img.src = e.target.result;
+					view.appendChild(img);
+				}
+			}
+		}
+	})
+}
+
+    </script>
+</body>
+</html>
